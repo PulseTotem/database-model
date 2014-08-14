@@ -1,3 +1,40 @@
+var express   = require('express')
+	, Sequelize = require('sequelize')
+	, http      = require('http')
+	, restful   = require('sequelize-restful')
+	, sequelize = new Sequelize('testseq', 'the6thscreen', 'yourcast', {
+		dialect: "postgres", // or 'sqlite', 'postgres', 'mariadb'
+		port: 5432 // or 5432 (for postgres)
+	})
+	, app = express();
+
+var User = sequelize.define('User', {
+	username: Sequelize.STRING,
+	password: Sequelize.STRING
+});
+
+var SDI = sequelize.define('SDI', {
+	description: Sequelize.STRING,
+	allowedHost: Sequelize.STRING
+});
+
+SDI.hasMany(User);
+User.hasMany(SDI);
+
+sequelize.sync({force: true}).success(function() {
+	console.log("base created !");
+})
+
+//app.configure(function() {
+	app.use(restful(sequelize, { /* options */ }))
+//})
+
+http.createServer(app).listen(3000, function(){
+	console.log("Express server listening on port " + 3000)
+})
+
+
+/*
 var Sequelize = require('sequelize')
 	, sequelize = new Sequelize('testseq', 'the6thscreen', 'yourcast', {
 		dialect: "postgres", // or 'sqlite', 'postgres', 'mariadb'
@@ -14,20 +51,11 @@ sequelize
 		}
 	});
 
+
+
 var chainer = new Sequelize.Utils.QueryChainer;
 
-var User = sequelize.define('User', {
-	username: Sequelize.STRING,
-	password: Sequelize.STRING
-});
 
-var SDI = sequelize.define('SDI', {
-	description: Sequelize.STRING,
-	allowedHost: Sequelize.STRING
-});
-
-SDI.hasMany(User);
-User.hasMany(SDI);
 
 chainer.add(sequelize.sync({force: true}));
 
@@ -52,7 +80,7 @@ chainer.add(SDI.find({where: {allowedHost: 'everywhere'}}).success(function(sdi)
 		//user.addSDI(sdi);
 	});
 }));
-
+*/
 
 /*sequelize.sync({force: true})  // it drops all tables!
 	.success(function() {
@@ -102,7 +130,7 @@ chainer.add(SDI.find({where: {allowedHost: 'everywhere'}}).success(function(sdi)
 		});
 }); */
 
-
+/*
 chainer
 	.runSerially()
 	.success(function(){
@@ -113,7 +141,7 @@ chainer
 		console.log(errors);
 	});
 
-
+*/
 
 /*var john;
 

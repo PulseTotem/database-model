@@ -13,7 +13,10 @@
   "author": "The 6th Screen",
   "license": "ISC",
   "dependencies": {
+    "express": "^4.8.3",
+    "http": "0.0.0",
     "pg": "^3.4.1",
-    "sequelize": "^1.7.9"
+    "sequelize": "^1.7.9",
+    "sequelize-restful": "^0.3.0"
   }
 }
