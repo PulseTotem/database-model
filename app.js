@@ -2,14 +2,61 @@ var express   = require('express'),
 	connection = require('./connection.js'),
 	http      = require('http'),
 	restful   = require('sequelize-restful'),
-	SDI = require('./sdi.js'),
-	User = require('./user.js'),
+	Call = require('./schemas/call.js'),
+	CallType = require('./schemas/callType.js'),
+	InfoType = require('./schemas/infoType.js'),
+	ParamType = require('./schemas/paramType.js'),
+	ParamValue = require('./schemas/paramValue.js'),
+	Profil = require('./schemas/profil.js'),
+	ReceivePolicy = require('./schemas/receivePolicy.js'),
+	Renderer = require('./schemas/renderer.js'),
+	RenderPolicy = require('./schemas/renderPolicy.js'),
+	Role = require('./schemas/role.js'),
+	SDI = require('./schemas/sdi.js'),
+	Source = require('./schemas/source.js'),
+	Timeline = require('./schemas/timeline.js'),
+	User = require('./schemas/user.js'),
+	Zone = require('./schemas/zone.js'),
 	app = express();
 
+User.schema.hasMany(Role.schema);
+User.schema.hasMany(SDI.schema);
 
+SDI.schema.hasMany(User.schema);
+SDI.schema.hasMany(Zone.schema);
+SDI.schema.hasMany(Profil.schema);
+SDI.schema.hasMany(Timeline.schema);
 
-SDI.SDI.hasMany(User.User);
-User.User.hasMany(SDI.SDI);
+Zone.schema.belongsTo(SDI.schema);
+Zone.schema.hasMany(CallType.schema);
+Zone.schema.hasMany(Call.schema);
+
+CallType.schema.belongsTo(Zone.schema);
+CallType.schema.hasOne(Source.schema);
+CallType.schema.hasOne(Renderer.schema);
+CallType.schema.hasOne(ReceivePolicy.schema);
+CallType.schema.hasOne(RenderPolicy.schema);
+CallType.schema.hasMany(Call.schema);
+
+Source.schema.hasOne(InfoType.schema);
+Source.schema.hasMany(ParamType.schema);
+Source.schema.hasMany(ParamValue.schema);
+
+Renderer.schema.hasOne(InfoType.schema);
+
+ParamValue.schema.belongsTo(ParamType.schema);
+
+Call.schema.belongsTo(Zone.schema);
+Call.schema.belongsTo(CallType.schema);
+Call.schema.belongsTo(Profil.schema);
+Call.schema.hasMany(ParamValue.schema);
+// necessaire ?
+Call.schema.hasOne(Source.schema);
+
+Profil.schema.hasMany(Call.schema);
+Profil.schema.hasMany(Timeline.schema);
+
+Timeline.schema.hasMany(Profil.schema);
 
 connection.sequelize.sync({force: true}).success(function() {
 	console.log("base created !");
