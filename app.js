@@ -11,7 +11,7 @@ relations.init();
 
 connection.sequelize.sync({force: true}).success(function() {
 	console.log("base created !");
-	defaultDatas.init();
+	//defaultDatas.init();
 });
 
 //app.configure(function() {
