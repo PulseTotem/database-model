@@ -34,11 +34,11 @@ exports.init = function() {
 	CallType.schema.hasOne(RenderPolicy.schema);
 	CallType.schema.hasMany(Call.schema);
 
-	Source.schema.hasOne(InfoType.schema);
+	Source.schema.belongsTo(InfoType.schema);
 	Source.schema.hasMany(ParamType.schema);
 	Source.schema.hasMany(ParamValue.schema);
 
-	Renderer.schema.hasOne(InfoType.schema);
+	//Renderer.schema.hasOne(InfoType.schema);
 
 	InfoType.schema.hasMany(Source.schema);
 	InfoType.schema.hasMany(Renderer.schema);

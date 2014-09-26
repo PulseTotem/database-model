@@ -37,19 +37,22 @@ var datas = {
 	]
 };
 
-exports.init = function() {
+exports.init = function(chainer) {
 	for (var infoType in datas) {
 		var tableau = datas[infoType];
 		var findInfoType = InfoTypes.schema.find({where: {name: infoType}});
 		findInfoType.success( function(type) {
-			console.log("Find infotype : "+type);
+			console.log("Find infotype : "+infoType);
 			for (var i = 0; i < tableau.length; i++) {
-				Sources.schema.create(tableau[i]).success(function (source) {
+				console.log("Try to create "+tableau[i].name);
+				chainer.add(Sources.schema.create(tableau[i]).success(function (source) {
 					source.setInfoType(type).success( function() {
 						console.log("Association OK between "+source+" and "+type);
 					});
-				});
+				}));
 			}
+		}).error(function () {
+			console.log("Didn't find infotype : "+infoType);
 		});
 
 		findInfoType.failure( function (err) {

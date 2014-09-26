@@ -9,8 +9,8 @@ var datas = [
 	}
 ];
 
-exports.init = function() {
+exports.init = function(chainer) {
 	for (var i = 0; i < datas.length; i++) {
-		InfoTypes.schema.create(datas[i]);
+		chainer.add(InfoTypes.schema.create(datas[i]));
 	}
 }
