@@ -2,6 +2,8 @@ var Call = require('../tables/call.js'),
 	CallType = require('../tables/callType.js'),
 	InfoType = require('../tables/infoType.js'),
 	ParamType = require('../tables/paramType.js'),
+	TypeParamType = require('../tables/typeParamType.js'),
+	ConstraintParamType = require('../tables/constraintParamType.js'),
 	ParamValue = require('../tables/paramValue.js'),
 	Profil = require('../tables/profil.js'),
 	ReceivePolicy = require('../tables/receivePolicy.js'),
@@ -38,13 +40,15 @@ exports.init = function() {
 	Source.schema.hasMany(ParamType.schema);
 	Source.schema.hasMany(ParamValue.schema);
 
-	ReceivePolicy.schema.hasMany(CallType.schema);
-	RenderPolicy.schema.hasMany(CallType.schema);
-
 	Renderer.schema.belongsTo(InfoType.schema);
 
 	InfoType.schema.hasMany(Source.schema);
 	InfoType.schema.hasMany(Renderer.schema);
+
+	ParamType.schema.belongsTo(TypeParamType.schema, {as: 'type'});
+	ParamType.schema.belongsTo(ConstraintParamType.schema, {as: 'constraint'});
+	ParamType.schema.belongsTo(ParamValue.schema, {as: 'defaultValue'});
+	ParamType.schema.hasMany(ParamValue.schema);
 
 	ParamValue.schema.belongsTo(ParamType.schema);
 
