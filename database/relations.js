@@ -17,47 +17,49 @@ var Call = require('../tables/call.js'),
 	Zone = require('../tables/zone.js');
 
 exports.init = function() {
-	User.schema.hasMany(Role.schema);
-	User.schema.hasMany(SDI.schema);
+	User.schema.hasMany(Role.schema); // a user has different roles
+	User.schema.hasMany(SDI.schema);  // a user has access to different SDI's
 
-	SDI.schema.hasMany(User.schema);
-	SDI.schema.hasMany(Zone.schema);
-	SDI.schema.hasMany(Profil.schema);
-	SDI.schema.hasMany(Timeline.schema);
+	SDI.schema.hasMany(User.schema); // a SDI can be seen/administrated by different users
+	SDI.schema.hasMany(Zone.schema); // a SDI contains many zone
+	SDI.schema.hasMany(Profil.schema); // a SDI can have many profiles
+	SDI.schema.hasMany(Timeline.schema); // a SDI can have many timelines
 
-	Zone.schema.belongsTo(SDI.schema);
-	Zone.schema.hasMany(CallType.schema);
-	Zone.schema.hasMany(Call.schema);
+	Zone.schema.belongsTo(SDI.schema); // a Zone can only belong to one SDI
+	Zone.schema.hasMany(CallType.schema); // a Zone has many CallTypes and must be able to reach them for Client
+	Zone.schema.hasMany(Call.schema); // a Zone has many Calls and must be able to reach them for Client
 
-	CallType.schema.belongsTo(Zone.schema);
-	CallType.schema.belongsTo(Source.schema);
-	CallType.schema.belongsTo(Renderer.schema);
-	CallType.schema.belongsTo(ReceivePolicy.schema);
-	CallType.schema.belongsTo(RenderPolicy.schema);
-	CallType.schema.hasMany(Call.schema);
+	CallType.schema.belongsTo(Zone.schema); // a CallType has one Zone
+	CallType.schema.belongsTo(Source.schema); // a CallType has one Source
+	CallType.schema.belongsTo(Renderer.schema); // a CallType has one Renderer
+	CallType.schema.belongsTo(ReceivePolicy.schema); // a CallType has one ReceivePolicy
+	CallType.schema.belongsTo(RenderPolicy.schema); // a CallType has one RenderPolicy
+	CallType.schema.hasMany(Call.schema); // TODO: And a CallType can have many Calls, but do we need to be able to reach them ??
 
-	Source.schema.belongsTo(InfoType.schema);
-	Source.schema.hasMany(ParamType.schema);
-	Source.schema.hasMany(ParamValue.schema);
+	Source.schema.belongsTo(InfoType.schema); // a Source has one InfoType
+	Source.schema.hasMany(ParamType.schema);  // TODO: a Source can have many ParamType but do we need to be able to reach them ??
+	Source.schema.hasMany(ParamValue.schema); // TODO: a source can have many ParamValue but do we need to be able to reach them ??
 
-	Renderer.schema.belongsTo(InfoType.schema);
+	Renderer.schema.belongsTo(InfoType.schema); // A Renderer has one InfoType
 
-	InfoType.schema.hasMany(Source.schema);
-	InfoType.schema.hasMany(Renderer.schema);
+	InfoType.schema.hasMany(Source.schema);  // An InfoType has many Sources : TODO : do we need that information?
+	InfoType.schema.hasMany(Renderer.schema); // an InfoType has many Renderers : TODO : do we need the information?
 
-	ParamType.schema.belongsTo(TypeParamType.schema, {as: 'type'});
-	ParamType.schema.belongsTo(ConstraintParamType.schema, {as: 'constraint'});
-	ParamType.schema.belongsTo(ParamValue.schema, {as: 'defaultValue'});
-	ParamType.schema.hasMany(ParamValue.schema);
+	ConstraintParamType.schema.belongsTo(TypeParamType.schema); // A constraint applies only on a specific TypeParamType
 
-	ParamValue.schema.belongsTo(ParamType.schema);
+	ParamType.schema.belongsTo(TypeParamType.schema, {as: 'type'}); // A paramType has a TypeParamType
+	ParamType.schema.belongsTo(ConstraintParamType.schema, {as: 'constraint'});  // A paramType can have a constraint
+	ParamType.schema.belongsTo(ParamValue.schema, {as: 'defaultValue'}); // a ParamType can have a default value
+	ParamType.schema.hasMany(ParamValue.schema); // A paramType has many values TODO: do we need to be able to reach them?
 
-	Call.schema.belongsTo(CallType.schema);
-	Call.schema.belongsTo(Profil.schema);
-	Call.schema.hasMany(ParamValue.schema);
+	ParamValue.schema.belongsTo(ParamType.schema); // a ParamValue has one ParamType
 
-	Profil.schema.hasMany(Call.schema);
-	Profil.schema.hasMany(Timeline.schema);
+	Call.schema.belongsTo(CallType.schema); // a Call has one specific CallType
+	Call.schema.belongsTo(Profil.schema);  // a Call belongs to a Profil
+	Call.schema.hasMany(ParamValue.schema); // a Call has many ParamValues
 
-	Timeline.schema.hasMany(Profil.schema);
+	Profil.schema.hasMany(Call.schema); // a Profil has many Calls
+	Profil.schema.hasMany(Timeline.schema); // a profil can have many timelines
+
+	Timeline.schema.hasMany(Profil.schema); // a timeline can have many profils
 };
