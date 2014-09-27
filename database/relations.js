@@ -28,29 +28,29 @@ exports.init = function() {
 	Zone.schema.hasMany(Call.schema);
 
 	CallType.schema.belongsTo(Zone.schema);
-	CallType.schema.hasOne(Source.schema);
-	CallType.schema.hasOne(Renderer.schema);
-	CallType.schema.hasOne(ReceivePolicy.schema);
-	CallType.schema.hasOne(RenderPolicy.schema);
+	CallType.schema.belongsTo(Source.schema);
+	CallType.schema.belongsTo(Renderer.schema);
+	CallType.schema.belongsTo(ReceivePolicy.schema);
+	CallType.schema.belongsTo(RenderPolicy.schema);
 	CallType.schema.hasMany(Call.schema);
 
 	Source.schema.belongsTo(InfoType.schema);
 	Source.schema.hasMany(ParamType.schema);
 	Source.schema.hasMany(ParamValue.schema);
 
-	//Renderer.schema.hasOne(InfoType.schema);
+	ReceivePolicy.schema.hasMany(CallType.schema);
+	RenderPolicy.schema.hasMany(CallType.schema);
+
+	Renderer.schema.belongsTo(InfoType.schema);
 
 	InfoType.schema.hasMany(Source.schema);
 	InfoType.schema.hasMany(Renderer.schema);
 
 	ParamValue.schema.belongsTo(ParamType.schema);
 
-	Call.schema.belongsTo(Zone.schema);
 	Call.schema.belongsTo(CallType.schema);
 	Call.schema.belongsTo(Profil.schema);
 	Call.schema.hasMany(ParamValue.schema);
-// necessaire ?
-	Call.schema.hasOne(Source.schema);
 
 	Profil.schema.hasMany(Call.schema);
 	Profil.schema.hasMany(Timeline.schema);
