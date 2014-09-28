@@ -34,23 +34,23 @@ exports.init = function() {
 	CallType.schema.belongsTo(Renderer.schema); // a CallType has one Renderer
 	CallType.schema.belongsTo(ReceivePolicy.schema); // a CallType has one ReceivePolicy
 	CallType.schema.belongsTo(RenderPolicy.schema); // a CallType has one RenderPolicy
-	CallType.schema.hasMany(Call.schema); // TODO: And a CallType can have many Calls, but do we need to be able to reach them ??
+	//CallType.schema.hasMany(Call.schema); // TODO: And a CallType can have many Calls, but do we need to be able to reach them ??
 
 	Source.schema.belongsTo(InfoType.schema); // a Source has one InfoType
 	Source.schema.hasMany(ParamType.schema);  // TODO: a Source can have many ParamType but do we need to be able to reach them ??
-	Source.schema.hasMany(ParamValue.schema); // TODO: a source can have many ParamValue but do we need to be able to reach them ??
+	Source.schema.hasMany(ParamValue.schema, {as: 'defaultParam'});
 
 	Renderer.schema.belongsTo(InfoType.schema); // A Renderer has one InfoType
 
-	InfoType.schema.hasMany(Source.schema);  // An InfoType has many Sources : TODO : do we need that information?
-	InfoType.schema.hasMany(Renderer.schema); // an InfoType has many Renderers : TODO : do we need the information?
+	//InfoType.schema.hasMany(Source.schema);  // An InfoType has many Sources : TODO : do we need that information?
+	//InfoType.schema.hasMany(Renderer.schema); // an InfoType has many Renderers : TODO : do we need the information?
 
 	ConstraintParamType.schema.belongsTo(TypeParamType.schema); // A constraint applies only on a specific TypeParamType
 
 	ParamType.schema.belongsTo(TypeParamType.schema, {as: 'type'}); // A paramType has a TypeParamType
 	ParamType.schema.belongsTo(ConstraintParamType.schema, {as: 'constraint'});  // A paramType can have a constraint
 	ParamType.schema.belongsTo(ParamValue.schema, {as: 'defaultValue'}); // a ParamType can have a default value
-	ParamType.schema.hasMany(ParamValue.schema); // A paramType has many values TODO: do we need to be able to reach them?
+	//ParamType.schema.hasMany(ParamValue.schema); // A paramType has many values TODO: do we need to be able to reach them?
 
 	ParamValue.schema.belongsTo(ParamType.schema); // a ParamValue has one ParamType
 
