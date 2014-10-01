@@ -59,7 +59,6 @@ exports.init = function() {
 	Call.schema.hasMany(ParamValue.schema); // a Call has many ParamValues
 
 	Profil.schema.hasMany(Call.schema); // a Profil has many Calls
-	Profil.schema.hasMany(Timeline.schema); // a profil can have many timelines
 
 	Timeline.schema.hasMany(Profil.schema); // a timeline can have many profils
 };
