@@ -1,4 +1,5 @@
-var Call = require('../tables/call.js'),
+var Behaviour = require('../tables/behaviour.js'),
+	Call = require('../tables/call.js'),
 	CallType = require('../tables/callType.js'),
 	InfoType = require('../tables/infoType.js'),
 	ParamType = require('../tables/paramType.js'),
@@ -26,6 +27,7 @@ exports.init = function() {
 	SDI.schema.hasMany(Timeline.schema); // a SDI can have many timelines
 
 	Zone.schema.belongsTo(SDI.schema); // a Zone can only belong to one SDI
+	Zone.schema.belongsTo(Behaviour.schema); // a Zone has one Behaviour
 	//Zone.schema.hasMany(CallType.schema); // a Zone has many CallTypes and must be able to reach them for Client
 	//Zone.schema.hasMany(Call.schema); // a Zone has many Calls and must be able to reach them for Client
 
