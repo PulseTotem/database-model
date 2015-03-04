@@ -28,7 +28,7 @@ exports.init = function() {
 
 	Zone.schema.belongsTo(SDI.schema); // a Zone can only belong to one SDI
 	Zone.schema.belongsTo(Behaviour.schema); // a Zone has one Behaviour
-	//Zone.schema.hasMany(CallType.schema); // a Zone has many CallTypes and must be able to reach them for Client
+	Zone.schema.hasMany(CallType.schema); // a Zone has many CallTypes and must be able to reach them for Client
 	//Zone.schema.hasMany(Call.schema); // a Zone has many Calls and must be able to reach them for Client
 
 	CallType.schema.belongsTo(Zone.schema); // a CallType has one Zone
