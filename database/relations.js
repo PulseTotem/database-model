@@ -52,6 +52,7 @@ exports.init = function() {
 	ParamType.schema.belongsTo(TypeParamType.schema, {as: 'type'}); // A paramType has a TypeParamType
 	ParamType.schema.belongsTo(ConstraintParamType.schema, {as: 'constraint'});  // A paramType can have a constraint
 	ParamType.schema.belongsTo(ParamValue.schema, {as: 'defaultValue'}); // a ParamType can have a default value
+    ParamType.schema.hasMany(Source.schema); // a ParamType is used by several Sources
 	//ParamType.schema.hasMany(ParamValue.schema); // A paramType has many values TODO: do we need to be able to reach them?
 
 	ParamValue.schema.belongsTo(ParamType.schema); // a ParamValue has one ParamType
