@@ -14,5 +14,6 @@ exports.schema = connection.sequelize.define('Zone', {
 	width: percentType,
 	height: percentType,
 	positionFromTop: percentType,
-	positionFromLeft: percentType
+	positionFromLeft: percentType,
+	complete: connection.Sequelize.BOOLEAN
 });

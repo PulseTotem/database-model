@@ -12,6 +12,7 @@ var Behaviour = require('../tables/behaviour.js'),
 	RenderPolicy = require('../tables/renderPolicy.js'),
 	Role = require('../tables/role.js'),
 	SDI = require('../tables/sdi.js'),
+	Service = require('../tables/service.js'),
 	Source = require('../tables/source.js'),
 	Timeline = require('../tables/timeline.js'),
 	User = require('../tables/user.js'),
@@ -41,6 +42,9 @@ exports.init = function() {
 	Source.schema.belongsTo(InfoType.schema); // a Source has one InfoType
 	Source.schema.hasMany(ParamType.schema);  // TODO: a Source can have many ParamType but do we need to be able to reach them ??
 	Source.schema.hasMany(ParamValue.schema, {as: 'defaultParam'});
+	Source.schema.belongsTo(Service.schema);
+
+	Service.schema.hasMany(Source.schema);
 
 	Renderer.schema.belongsTo(InfoType.schema); // A Renderer has one InfoType
 

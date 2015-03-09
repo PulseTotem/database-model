@@ -5,5 +5,6 @@ exports.schema = connection.sequelize.define('User', {
     email: {type: connection.Sequelize.STRING, unique: true},
 	password: connection.Sequelize.STRING,
     token: connection.Sequelize.STRING,
-    lastIp: connection.Sequelize.STRING
+    lastIp: connection.Sequelize.STRING,
+	complete: connection.Sequelize.BOOLEAN
 });
