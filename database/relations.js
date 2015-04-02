@@ -1,26 +1,30 @@
 var Behaviour = require('../tables/behaviour.js'),
 	Call = require('../tables/call.js'),
 	CallType = require('../tables/callType.js'),
-	InfoType = require('../tables/infoType.js'),
+    ConstraintParamType = require('../tables/constraintParamType.js'),
+    InfoType = require('../tables/infoType.js'),
+    OAuthKey = require('../tables/oAuthKey.js'),
 	ParamType = require('../tables/paramType.js'),
-	TypeParamType = require('../tables/typeParamType.js'),
-	ConstraintParamType = require('../tables/constraintParamType.js'),
-	ParamValue = require('../tables/paramValue.js'),
-	Profil = require('../tables/profil.js'),
-	ReceivePolicy = require('../tables/receivePolicy.js'),
-	Renderer = require('../tables/renderer.js'),
-	RenderPolicy = require('../tables/renderPolicy.js'),
-	Role = require('../tables/role.js'),
-	SDI = require('../tables/sdi.js'),
-	Service = require('../tables/service.js'),
-	Source = require('../tables/source.js'),
-	Timeline = require('../tables/timeline.js'),
+    ParamValue = require('../tables/paramValue.js'),
+    Profil = require('../tables/profil.js'),
+    ReceivePolicy = require('../tables/receivePolicy.js'),
+    Renderer = require('../tables/renderer.js'),
+    RenderPolicy = require('../tables/renderPolicy.js'),
+    Role = require('../tables/role.js'),
+    SDI = require('../tables/sdi.js'),
+    Service = require('../tables/service.js'),
+    Source = require('../tables/source.js'),
+    Timeline = require('../tables/timeline.js'),
+    TypeParamType = require('../tables/typeParamType.js'),
 	User = require('../tables/user.js'),
 	Zone = require('../tables/zone.js');
 
 exports.init = function() {
 	User.schema.hasMany(Role.schema); // a user has different roles
 	User.schema.hasMany(SDI.schema);  // a user has access to different SDI's
+    User.schema.hasMany(OAuthKey.schema);  // a user has access to different OAuthKeys
+
+    OAuthKey.schema.belongsTo(Service.schema); // an OAuthKey belongs to one Service
 
 	SDI.schema.hasMany(User.schema); // a SDI can be seen/administrated by different users
 	SDI.schema.hasMany(Zone.schema); // a SDI contains many zone
