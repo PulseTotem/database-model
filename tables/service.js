@@ -7,5 +7,6 @@ exports.schema = connection.sequelize.define('Service', {
 	name: {type: connection.Sequelize.STRING, unique: true},
 	description: connection.Sequelize.STRING,
 	host: connection.Sequelize.STRING,
+  oauth: connection.Sequelize.BOOLEAN,
 	complete: connection.Sequelize.BOOLEAN
 });
