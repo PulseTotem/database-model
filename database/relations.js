@@ -41,7 +41,7 @@ exports.init = function() {
 	CallType.schema.belongsTo(Renderer.schema); // a CallType has one Renderer
 	CallType.schema.belongsTo(ReceivePolicy.schema); // a CallType has one ReceivePolicy
 	CallType.schema.belongsTo(RenderPolicy.schema); // a CallType has one RenderPolicy
-	CallType.schema.hasMany(Call.schema); // TODO: And a CallType can have many Calls, but do we need to be able to reach them ??
+	CallType.schema.hasMany(Call.schema);
 
 	Source.schema.belongsTo(InfoType.schema); // a Source has one InfoType
 	Source.schema.hasMany(ParamType.schema);  // TODO: a Source can have many ParamType but do we need to be able to reach them ??
