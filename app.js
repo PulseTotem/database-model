@@ -34,8 +34,10 @@ if(dropDatabase) {
 	app.use(restful(connection.sequelize, { /* options */ }))
 //})
 
-http.createServer(app).listen(3000, function(){
-	console.log("Express server listening on port " + 3000)
+var port = process.env.PORT || 3000;
+
+http.createServer(app).listen(port, function(){
+	console.log("Express server listening on port " + port)
 })
 
 
