@@ -1,0 +1,22 @@
+{
+  "name": "database-model",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@bitbucket.org:the6thscreenteam/database-model.git"
+  },
+  "author": "The 6th Screen",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.8.3",
+    "http": "0.0.0",
+    "pg": "^3.4.1",
+    "sequelize": "^1.7.9",
+    "sequelize-restful": "https://github.com/surli/sequelize-restful"
+  }
+}
