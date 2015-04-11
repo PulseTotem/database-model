@@ -3,13 +3,14 @@ var Sequelize = require('sequelize');
 var fs = require('fs');
 var file = __dirname + '/connection_infos.json';
 
-if(process.env.HEROKU_POSTGRESQL_COBALT_URL) {
-  exports.sequelize = new Sequelize(process.env.HEROKU_POSTGRESQL_COBALT_URL, {
+if(process.env.DATABASE_URL) {
+  var match = process.env.DATABASE_URL.match(/postgres:\/\/([^:]+):([^@]+)@([^:]+):(\d+)\/(.+)/);
+  exports.sequelize = sequelize = new Sequelize(match[5], match[1], match[2], {
     dialect:  'postgres',
     protocol: 'postgres',
     port:     match[4],
     host:     match[3],
-    logging:  true //false
+    logging: false
   });
 } else {
   try {
