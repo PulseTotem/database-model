@@ -3,7 +3,6 @@ var express   = require('express'),
 	http      = require('http'),
 	restful   = require('sequelize-restful'),
 	relations = require('./database/relations.js'),
-	defaultDatas = require('./database/defaultDatas.js'),
 	app = express();
 
 relations.init();
