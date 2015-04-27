@@ -1,4 +1,6 @@
-var Behaviour = require('../tables/behaviour.js'),
+var AbsoluteEvent = require('../tables/absoluteEvent.js'),
+	AbsoluteTimeline = require('../tables/absoluteTimeline.js'),
+	Behaviour = require('../tables/behaviour.js'),
 	Call = require('../tables/call.js'),
 	CallType = require('../tables/callType.js'),
     ConstraintParamType = require('../tables/constraintParamType.js'),
@@ -6,18 +8,20 @@ var Behaviour = require('../tables/behaviour.js'),
     OAuthKey = require('../tables/oAuthKey.js'),
 	ParamType = require('../tables/paramType.js'),
     ParamValue = require('../tables/paramValue.js'),
+	Policy = require('../tables/policy.js'),
     Profil = require('../tables/profil.js'),
-    ReceivePolicy = require('../tables/receivePolicy.js'),
+	RelativeEvent = require('../tables/relativeEvent.js'),
+	RelativeTimeline = require('../tables/relativeTimeline.js'),
     Renderer = require('../tables/renderer.js'),
-    RenderPolicy = require('../tables/renderPolicy.js'),
     Role = require('../tables/role.js'),
     SDI = require('../tables/sdi.js'),
     Service = require('../tables/service.js'),
     Source = require('../tables/source.js'),
-    Timeline = require('../tables/timeline.js'),
     TypeParamType = require('../tables/typeParamType.js'),
 	User = require('../tables/user.js'),
-	Zone = require('../tables/zone.js');
+	Widget = require('../tables/widget.js'),
+	Zone = require('../tables/zone.js'),
+	ZoneContent = require('../tables/zoneContent.js');
 
 exports.init = function() {
 	User.schema.hasMany(Role.schema); // a user has different roles
@@ -29,18 +33,17 @@ exports.init = function() {
 	SDI.schema.hasMany(User.schema); // a SDI can be seen/administrated by different users
 	SDI.schema.hasMany(Zone.schema); // a SDI contains many zone
 	SDI.schema.hasMany(Profil.schema); // a SDI can have many profiles
-	SDI.schema.hasMany(Timeline.schema); // a SDI can have many timelines
 
 	Zone.schema.belongsTo(SDI.schema); // a Zone can only belong to one SDI
 	Zone.schema.belongsTo(Behaviour.schema); // a Zone has one Behaviour
-	Zone.schema.hasMany(CallType.schema); // a Zone has many CallTypes and must be able to reach them for Client
+	Zone.schema.hasMany(CallType.schema); // a Zone has many CallTypes and must be able to reach them for administration
+	Zone.schema.hasMany(ZoneContent.schema);
 	//Zone.schema.hasMany(Call.schema); // a Zone has many Calls and must be able to reach them for Client
 
 	CallType.schema.belongsTo(Zone.schema); // a CallType has one Zone
 	CallType.schema.belongsTo(Source.schema); // a CallType has one Source
 	CallType.schema.belongsTo(Renderer.schema); // a CallType has one Renderer
-	CallType.schema.belongsTo(ReceivePolicy.schema); // a CallType has one ReceivePolicy
-	CallType.schema.belongsTo(RenderPolicy.schema); // a CallType has one RenderPolicy
+	CallType.schema.belongsTo(Policy.schema); // a CallType has one ReceivePolicy
 	CallType.schema.hasMany(Call.schema);
 
 	Source.schema.belongsTo(InfoType.schema); // a Source has one InfoType
@@ -69,7 +72,20 @@ exports.init = function() {
 	Call.schema.belongsTo(Profil.schema);  // a Call belongs to a Profil
 	Call.schema.hasMany(ParamValue.schema); // a Call has many ParamValues
 
-	Profil.schema.hasMany(Call.schema); // a Profil has many Calls
+	Profil.schema.hasMany(ZoneContent.schema); // a Profil has many ZoneContents
+	Profil.schema.belongsTo(SDI.schema);
 
-	Timeline.schema.hasMany(Profil.schema); // a timeline can have many profils
+	RelativeTimeline.schema.hasMany(RelativeEvent.schema);
+
+	AbsoluteTimeline.schema.hasMany(AbsoluteEvent.schema);
+
+	AbsoluteEvent.schema.belongsTo(RelativeTimeline.schema);  // An absolute event has one relative timeline
+
+	RelativeEvent.schema.belongsTo(Call.schema); // A relative event has one call
+
+	ZoneContent.schema.belongsTo(Widget.schema);
+	ZoneContent.schema.belongsTo(AbsoluteTimeline.schema);
+	ZoneContent.schema.belongsTo(RelativeTimeline.schema);
+	ZoneContent.schema.belongsTo(Zone.schema);
+
 };
