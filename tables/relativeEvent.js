@@ -1,6 +1,6 @@
 var connection = require('./../database/connection.js');
 
-exports.schema = connection.sequelize.define('AbsoluteTimeline', {
+exports.schema = connection.sequelize.define('RelativeEvent', {
 	name: connection.Sequelize.STRING,
 	position: {
 		type: connection.Sequelize.INTEGER,
