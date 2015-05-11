@@ -69,6 +69,7 @@ exports.init = function() {
 	ParamValue.schema.belongsTo(ParamType.schema); // a ParamValue has one ParamType
 
 	Call.schema.belongsTo(CallType.schema); // a Call has one specific CallType
+  Call.schema.belongsTo(OAuthKey.schema); // a Call can have one specific OAuthKey
 	Call.schema.hasMany(ParamValue.schema); // a Call has many ParamValues
 
 	Profil.schema.hasMany(ZoneContent.schema); // a Profil has many ZoneContents
