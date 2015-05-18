@@ -17,8 +17,11 @@ var AbsoluteEvent = require('../tables/absoluteEvent.js'),
     SDI = require('../tables/sdi.js'),
     Service = require('../tables/service.js'),
     Source = require('../tables/source.js'),
+	SystemTrigger = require('../tables/systemTrigger.js'),
+	TimelineRunner = require('../tables/timelineRunner.js'),
     TypeParamType = require('../tables/typeParamType.js'),
 	User = require('../tables/user.js'),
+	UserTrigger = require('../tables/userTrigger.js'),
 	Widget = require('../tables/widget.js'),
 	Zone = require('../tables/zone.js'),
 	ZoneContent = require('../tables/zoneContent.js');
@@ -68,14 +71,17 @@ exports.init = function() {
 
 	ParamValue.schema.belongsTo(ParamType.schema); // a ParamValue has one ParamType
 
-	Call.schema.belongsTo(CallType.schema); // a Call has one specific CallType
-  Call.schema.belongsTo(OAuthKey.schema); // a Call can have one specific OAuthKey
+	Call.schema.belongsTo(CallType.schema); // a Call has one specific CallTyp
+	Call.schema.belongsTo(OAuthKey.schema); // a Call can have one specific OAuthKey
 	Call.schema.hasMany(ParamValue.schema); // a Call has many ParamValues
 
 	Profil.schema.hasMany(ZoneContent.schema); // a Profil has many ZoneContents
 	Profil.schema.belongsTo(SDI.schema);
 
 	RelativeTimeline.schema.hasMany(RelativeEvent.schema);
+	RelativeTimeline.schema.belongsTo(TimelineRunner.schema);
+	RelativeTimeline.schema.belongsTo(UserTrigger.schema);
+	RelativeTimeline.schema.belongsTo(SystemTrigger.schema);
 
 	AbsoluteTimeline.schema.hasMany(AbsoluteEvent.schema);
 
