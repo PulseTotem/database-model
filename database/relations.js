@@ -58,8 +58,8 @@ exports.init = function() {
 
 	Renderer.schema.belongsTo(InfoType.schema); // A Renderer has one InfoType
 
-	//InfoType.schema.hasMany(Source.schema);  // An InfoType has many Sources : TODO : do we need that information?
-	//InfoType.schema.hasMany(Renderer.schema); // an InfoType has many Renderers : TODO : do we need the information?
+	InfoType.schema.hasMany(Source.schema);  // An InfoType has many Sources
+	InfoType.schema.hasMany(Renderer.schema); // an InfoType has many Renderers
 
 	ConstraintParamType.schema.belongsTo(TypeParamType.schema); // A constraint applies only on a specific TypeParamType
 
