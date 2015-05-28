@@ -8,5 +8,6 @@ exports.schema = connection.sequelize.define('ThemeZone', {
 	background: connection.Sequelize.STRING(1024),
 	font: connection.Sequelize.STRING,
 	opacity: connection.Sequelize.STRING,
-	border: connection.Sequelize.STRING
+	border: connection.Sequelize.STRING,
+	color: connection.Sequelize.STRING
 });

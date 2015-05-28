@@ -7,5 +7,6 @@ exports.schema = connection.sequelize.define('ThemeSDI', {
 	defaultTheme: connection.Sequelize.BOOLEAN,
 	background: connection.Sequelize.STRING(1024),
 	font: connection.Sequelize.STRING,
-	opacity: connection.Sequelize.STRING
+	opacity: connection.Sequelize.STRING,
+	color: connection.Sequelize.STRING
 });
