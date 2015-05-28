@@ -19,6 +19,8 @@ var AbsoluteEvent = require('../tables/absoluteEvent.js'),
     Source = require('../tables/source.js'),
 	SystemTrigger = require('../tables/systemTrigger.js'),
 	TimelineRunner = require('../tables/timelineRunner.js'),
+	ThemeSDI = require('../tables/themeSDI.js'),
+	ThemeZone = require('../tables/themeZone.js'),
     TypeParamType = require('../tables/typeParamType.js'),
 	User = require('../tables/user.js'),
 	UserTrigger = require('../tables/userTrigger.js'),
@@ -36,11 +38,15 @@ exports.init = function() {
 	SDI.schema.hasMany(User.schema); // a SDI can be seen/administrated by different users
 	SDI.schema.hasMany(Zone.schema); // a SDI contains many zone
 	SDI.schema.hasMany(Profil.schema); // a SDI can have many profiles
+	SDI.schema.belongsTo(ThemeSDI.schema);
+
+	ThemeSDI.schema.belongsTo(ThemeZone.schema);
 
 	Zone.schema.belongsTo(SDI.schema); // a Zone can only belong to one SDI
 	Zone.schema.belongsTo(Behaviour.schema); // a Zone has one Behaviour
 	Zone.schema.hasMany(CallType.schema); // a Zone has many CallTypes and must be able to reach them for administration
 	Zone.schema.hasMany(ZoneContent.schema);
+	Zone.schema.belongsTo(ThemeZone.schema);
 	//Zone.schema.hasMany(Call.schema); // a Zone has many Calls and must be able to reach them for Client
 
 	CallType.schema.belongsTo(Zone.schema); // a CallType has one Zone
