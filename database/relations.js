@@ -31,9 +31,9 @@ var AbsoluteEvent = require('../tables/absoluteEvent.js'),
 exports.init = function() {
 	User.schema.hasMany(Role.schema); // a user has different roles
 	User.schema.hasMany(SDI.schema);  // a user has access to different SDI's
-    User.schema.hasMany(OAuthKey.schema);  // a user has access to different OAuthKeys
+  User.schema.hasMany(OAuthKey.schema);  // a user has access to different OAuthKeys
 
-    OAuthKey.schema.belongsTo(Service.schema); // an OAuthKey belongs to one Service
+  OAuthKey.schema.belongsTo(Service.schema); // an OAuthKey belongs to one Service
 
 	SDI.schema.hasMany(User.schema); // a SDI can be seen/administrated by different users
 	SDI.schema.hasMany(Zone.schema); // a SDI contains many zone
@@ -72,7 +72,7 @@ exports.init = function() {
 	ParamType.schema.belongsTo(TypeParamType.schema, {as: 'type'}); // A paramType has a TypeParamType
 	ParamType.schema.belongsTo(ConstraintParamType.schema, {as: 'constraint'});  // A paramType can have a constraint
 	ParamType.schema.belongsTo(ParamValue.schema, {as: 'defaultValue'}); // a ParamType can have a default value
-    ParamType.schema.hasMany(Source.schema); // a ParamType is used by several Sources
+  ParamType.schema.hasMany(Source.schema); // a ParamType is used by several Sources
 	//ParamType.schema.hasMany(ParamValue.schema); // A paramType has many values TODO: do we need to be able to reach them?
 
 	ParamValue.schema.belongsTo(ParamType.schema); // a ParamValue has one ParamType
@@ -99,5 +99,6 @@ exports.init = function() {
 	ZoneContent.schema.belongsTo(AbsoluteTimeline.schema);
 	ZoneContent.schema.belongsTo(RelativeTimeline.schema);
 	ZoneContent.schema.belongsTo(Zone.schema);
+  ZoneContent.schema.hasMany(Profil.schema); // a ZoneContent belongs to many Profils
 
 };
