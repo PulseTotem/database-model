@@ -15,6 +15,7 @@ var AbsoluteEvent = require('../tables/absoluteEvent.js'),
     Renderer = require('../tables/renderer.js'),
     Role = require('../tables/role.js'),
     SDI = require('../tables/sdi.js'),
+	SDIStatus = require('../tables/sdiStatus.js'),
     Service = require('../tables/service.js'),
     Source = require('../tables/source.js'),
 	SystemTrigger = require('../tables/systemTrigger.js'),
@@ -39,8 +40,14 @@ exports.init = function() {
 	SDI.schema.hasMany(Zone.schema); // a SDI contains many zone
 	SDI.schema.hasMany(Profil.schema); // a SDI can have many profiles
 	SDI.schema.belongsTo(ThemeSDI.schema);
+	SDI.schema.hasMany(SDIStatus.schema);
 
 	ThemeSDI.schema.belongsTo(ThemeZone.schema);
+
+	SDIStatus.schema.belongsTo(SDI.schema);
+	SDIStatus.schema.belongsTo(Profil.schema);
+
+
 
 	Zone.schema.belongsTo(SDI.schema); // a Zone can only belong to one SDI
 	Zone.schema.belongsTo(Behaviour.schema); // a Zone has one Behaviour
@@ -83,6 +90,7 @@ exports.init = function() {
 
 	Profil.schema.hasMany(ZoneContent.schema); // a Profil has many ZoneContents
 	Profil.schema.belongsTo(SDI.schema);
+	Profil.schema.hasMany(SDIStatus.schema);
 
 	RelativeTimeline.schema.hasMany(RelativeEvent.schema);
 	RelativeTimeline.schema.belongsTo(TimelineRunner.schema);
