@@ -1,8 +1,10 @@
 var AbsoluteEvent = require('../tables/absoluteEvent.js'),
 	AbsoluteTimeline = require('../tables/absoluteTimeline.js'),
+	AuthorizedClient = require('../tables/authorizedClient.js'),
 	Behaviour = require('../tables/behaviour.js'),
 	Call = require('../tables/call.js'),
 	CallType = require('../tables/callType.js'),
+	Client = require('../tables/client.js'),
     ConstraintParamType = require('../tables/constraintParamType.js'),
     InfoType = require('../tables/infoType.js'),
     OAuthKey = require('../tables/oAuthKey.js'),
@@ -15,7 +17,7 @@ var AbsoluteEvent = require('../tables/absoluteEvent.js'),
     Renderer = require('../tables/renderer.js'),
     Role = require('../tables/role.js'),
     SDI = require('../tables/sdi.js'),
-    Service = require('../tables/service.js'),
+	Service = require('../tables/service.js'),
     Source = require('../tables/source.js'),
 	SystemTrigger = require('../tables/systemTrigger.js'),
 	TimelineRunner = require('../tables/timelineRunner.js'),
@@ -39,8 +41,14 @@ exports.init = function() {
 	SDI.schema.hasMany(Zone.schema); // a SDI contains many zone
 	SDI.schema.hasMany(Profil.schema); // a SDI can have many profiles
 	SDI.schema.belongsTo(ThemeSDI.schema);
+	SDI.schema.hasMany(AuthorizedClient.schema);
 
 	ThemeSDI.schema.belongsTo(ThemeZone.schema);
+
+	AuthorizedClient.schema.belongsTo(SDI.schema);
+	AuthorizedClient.schema.belongsTo(Profil.schema);
+	Client.schema.belongsTo(Profil.schema);
+
 
 	Zone.schema.belongsTo(SDI.schema); // a Zone can only belong to one SDI
 	Zone.schema.belongsTo(Behaviour.schema); // a Zone has one Behaviour
@@ -83,6 +91,8 @@ exports.init = function() {
 
 	Profil.schema.hasMany(ZoneContent.schema); // a Profil has many ZoneContents
 	Profil.schema.belongsTo(SDI.schema);
+	Profil.schema.hasMany(AuthorizedClient.schema);
+	Profil.schema.hasMany(Client.schema);
 
 	RelativeTimeline.schema.hasMany(RelativeEvent.schema);
 	RelativeTimeline.schema.belongsTo(TimelineRunner.schema);
