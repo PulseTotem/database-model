@@ -4,5 +4,9 @@ exports.schema = connection.sequelize.define('Source', {
 	name: {type: connection.Sequelize.STRING, unique: 'sourceServiceName'},
 	description: connection.Sequelize.STRING,
 	method: connection.Sequelize.STRING,
+  refreshTime: {
+    type: connection.Sequelize.INTEGER,
+    min: 0
+  },
 	complete: connection.Sequelize.BOOLEAN
 });
