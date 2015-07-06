@@ -8,5 +8,6 @@ exports.schema = connection.sequelize.define('Source', {
     type: connection.Sequelize.INTEGER,
     min: 0
   },
+	isStatic: connection.Sequelize.BOOLEAN,
 	complete: connection.Sequelize.BOOLEAN
 });
