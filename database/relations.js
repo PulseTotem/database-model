@@ -26,7 +26,6 @@ var AbsoluteEvent = require('../tables/absoluteEvent.js'),
     TypeParamType = require('../tables/typeParamType.js'),
 	User = require('../tables/user.js'),
 	UserTrigger = require('../tables/userTrigger.js'),
-	Widget = require('../tables/widget.js'),
 	Zone = require('../tables/zone.js'),
 	ZoneContent = require('../tables/zoneContent.js');
 
@@ -105,7 +104,6 @@ exports.init = function() {
 
 	RelativeEvent.schema.belongsTo(Call.schema); // A relative event has one call
 
-	ZoneContent.schema.belongsTo(Widget.schema);
 	ZoneContent.schema.belongsTo(AbsoluteTimeline.schema);
 	ZoneContent.schema.belongsTo(RelativeTimeline.schema);
 	ZoneContent.schema.belongsTo(Zone.schema);
