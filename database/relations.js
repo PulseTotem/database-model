@@ -66,6 +66,7 @@ exports.init = function() {
 	Source.schema.hasMany(ParamType.schema);  // TODO: a Source can have many ParamType but do we need to be able to reach them ??
 	Source.schema.hasMany(ParamValue.schema, {as: 'defaultParam'});
 	Source.schema.belongsTo(Service.schema);
+	Source.schema.hasMany(CallType.schema);
 
 	Service.schema.hasMany(Source.schema);
 
