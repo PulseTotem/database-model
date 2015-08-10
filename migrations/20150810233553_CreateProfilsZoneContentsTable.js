@@ -1,6 +1,6 @@
 module.exports = {
   up: function(migration, DataTypes) {
-    migration.createTable('ParamTypesSources', {
+    migration.createTable('ProfilsZoneContents', {
       createdAt: {
         type: DataTypes.DATE,
         allowNull: false
@@ -9,11 +9,11 @@ module.exports = {
         type: DataTypes.DATE,
         allowNull: false
       },
-      ParamTypeId: {
+      ZoneContentId: {
         type: DataTypes.INTEGER,
         allowNull: false
       },
-      SourceId: {
+      ProfilId: {
         type: DataTypes.INTEGER,
         allowNull: false
       }
@@ -21,6 +21,6 @@ module.exports = {
   },
 
   down: function(migration, DataTypes) {
-    migration.dropTable('ParamTypesSources');
+    migration.dropTable('ProfilsZoneContents');
   }
 }
