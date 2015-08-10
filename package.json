@@ -2,21 +2,18 @@
   "name": "the6thscreen-database",
   "version": "2.0.0",
   "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git@bitbucket.org:the6thscreenteam/database-model.git"
-  },
-  "author": "The 6th Screen",
-  "license": "ISC",
   "dependencies": {
     "express": "^4.8.3",
     "http": "0.0.0",
     "pg": "^3.4.1",
-    "sequelize": "^1.7.9",
-    "sequelize-restful": "https://github.com/surli/sequelize-restful"
+    "sequelize": "<=2.0.4",
+    "sequelize-cli": "~1.7.4",
+    "sequelize-restful": "https://github.com/surli/sequelize-restful",
+    "pg-hstore": "~2.3.2"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.5",
+    "grunt-contrib-copy": "~0.8.0",
+    "moment": "~2.10.6"
   }
 }
