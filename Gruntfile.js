@@ -5,10 +5,12 @@ module.exports = function (grunt) {
 
   // load extern tasks
   grunt.loadNpmTasks('grunt-contrib-copy');
+  grunt.loadNpmTasks('grunt-exec');
+  grunt.loadNpmTasks('grunt-contrib-clean');
  /* grunt.loadNpmTasks('grunt-update-json');
   grunt.loadNpmTasks('grunt-npm-install');
   grunt.loadNpmTasks('grunt-express-server');
-  grunt.loadNpmTasks('grunt-contrib-clean');
+
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-typescript');
 
@@ -22,13 +24,23 @@ module.exports = function (grunt) {
   // tasks
   grunt.initConfig({
 
+    config : grunt.file.readJSON('config/config.json'),
+
     copy: {
       migrationFile: {
         files: 	[{'migrations/<%= grunt.option("fileName") %>.js': 'config/migrationFile-sample.js'}]
       }
+    },
+
+    exec: {
+      doMigration: './node_modules/sequelize-cli/bin/sequelize db:migrate',
+      undoMigration: './node_modules/sequelize-cli/bin/sequelize db:migrate:undo',
+      generateModels: './node_modules/sequelize-auto/bin/sequelize-auto -o "./models" -d <%= config.development.database %> -h <%= config.development.host %> -u <%= config.development.username %> -p <%= config.development.port %> -x <%= config.development.password %> -e <%= config.development.dialect %>'
+    },
+
+    clean: {
+      models: ["models/*.js", "!models/index.js"]
     }
-
-
 
 /*    coreReposConfig : grunt.file.readJSON('core-repos-config.json'),
 
@@ -305,19 +317,23 @@ module.exports = function (grunt) {
           }
 
           var now = new moment();
-          var fileName = now.format("YYYY_MM_DD_HH_mm_ss_") + migrationName;
+          var fileName = now.format("YYYYMMDDHHmmss_") + migrationName;
           grunt.option("fileName", fileName);
           grunt.task.run(['copy:migrationFile']);
           break;
         case 'do' :
+          grunt.task.run(['exec:doMigration', 'clean:models', 'exec:generateModels']);
           break;
         case 'undo' :
+          grunt.task.run(['exec:undoMigration', 'clean:models', 'exec:generateModels']);
           break;
         default :
           grunt.log.writeln('Action "' + arg + '" doesn\'t exist.');
       }
     }
   });
+
+
 
   /*grunt.registerTask('init', ['symlink:coreBackend']);
 
