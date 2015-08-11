@@ -16,6 +16,7 @@ module.exports = {
         },
         duration: {
           type: DataTypes.INTEGER,
+          min: 0,
           allowNull: true
         },
         complete: {

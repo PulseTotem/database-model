@@ -8,10 +8,12 @@ module.exports = {
       },
       username: {
         type: DataTypes.STRING,
+        unique: true,
         allowNull: true
       },
       email: {
         type: DataTypes.STRING,
+        unique: true,
         allowNull: true
       },
       password: {

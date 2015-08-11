@@ -12,10 +12,12 @@ module.exports = {
       },
       position: {
         type: DataTypes.INTEGER,
+        min: 0,
         allowNull: true
       },
       duration: {
         type: DataTypes.INTEGER,
+        min: 0,
         allowNull: true
       },
       complete: {

@@ -8,6 +8,7 @@ module.exports = {
       },
       hash: {
         type: DataTypes.STRING,
+        unique: true,
         allowNull: true
       },
       name: {

@@ -1,4 +1,11 @@
-var db = require('../models/index.js');
+exports.models = [];
+
+exports.models = [];
+exports.models = [];
+
+
+
+/*var db = require('../models/index.js');
 
 var AbsoluteEvent = db['AbsoluteEvents'],
   AbsoluteTimeline = db['AbsoluteTimelines'],
@@ -111,4 +118,4 @@ exports.init = function() {
   ZoneContent.belongsTo(RelativeTimeline);
   ZoneContent.belongsTo(Zone);
   ZoneContent.hasMany(Profil); // a ZoneContent belongs to many Profils
-};
+};*/

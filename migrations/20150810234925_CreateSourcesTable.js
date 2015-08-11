@@ -8,6 +8,7 @@ module.exports = {
       },
       name: {
         type: DataTypes.STRING,
+        unique: 'sourceServiceName',
         allowNull: true
       },
       description: {
@@ -20,6 +21,7 @@ module.exports = {
       },
       refreshTime: {
         type: DataTypes.INTEGER,
+        min: 0,
         allowNull: true
       },
       isStatic: {

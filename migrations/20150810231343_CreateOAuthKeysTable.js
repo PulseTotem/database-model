@@ -15,7 +15,7 @@ module.exports = {
         allowNull: true
       },
       value: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(1024),
         allowNull: true
       },
       complete: {

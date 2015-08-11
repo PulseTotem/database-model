@@ -1,5 +1,14 @@
 module.exports = {
   up: function(migration, DataTypes) {
+    var percentType = {
+      type: DataTypes.INTEGER,
+      validate: {
+        min: 0,
+        max: 100
+      },
+      allowNull: true
+    };
+
     migration.createTable('Zones', {
       id: {
         type: DataTypes.INTEGER,
@@ -14,22 +23,10 @@ module.exports = {
         type: DataTypes.STRING,
         allowNull: true
       },
-      width: {
-        type: DataTypes.INTEGER,
-        allowNull: true
-      },
-      height: {
-        type: DataTypes.INTEGER,
-        allowNull: true
-      },
-      positionFromTop: {
-        type: DataTypes.INTEGER,
-        allowNull: true
-      },
-      positionFromLeft: {
-        type: DataTypes.INTEGER,
-        allowNull: true
-      },
+      width: percentType,
+      height: percentType,
+      positionFromTop: percentType,
+      positionFromLeft: percentType,
       complete: {
         type: DataTypes.BOOLEAN,
         allowNull: true

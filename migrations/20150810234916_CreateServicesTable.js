@@ -8,6 +8,7 @@ module.exports = {
       },
       name: {
         type: DataTypes.STRING,
+        unique: true,
         allowNull: true
       },
       description: {
@@ -27,7 +28,7 @@ module.exports = {
         allowNull: true
       },
       logo: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(1024),
         allowNull: true
       },
       complete: {

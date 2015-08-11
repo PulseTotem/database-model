@@ -23,11 +23,11 @@ module.exports = {
         allowNull: true
       },
       backgroundImageURL: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(1024),
         allowNull: true
       },
       backgroundVideoURL: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(1024),
         allowNull: true
       },
       backgroundColor: {
