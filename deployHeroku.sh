@@ -12,7 +12,7 @@ then
   exit 1
 fi
 
-heroku login
+#heroku login
 current=$(pwd)
 herokuDir="$current-heroku"
 rm -rf $herokuDir

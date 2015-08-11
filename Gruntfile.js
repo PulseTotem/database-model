@@ -302,7 +302,7 @@ module.exports = function (grunt) {
   });
 
   // register tasks
-  //grunt.registerTask('default', ['build']);
+  grunt.registerTask('default', ['migration']);
 
   grunt.registerTask('migration', 'Task to manage database migration.', function(arg, arg2) {
     if (arguments.length === 0) {

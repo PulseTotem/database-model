@@ -1,121 +1,123 @@
-exports.models = [];
+exports.models = [
+  'AbsoluteEvents',
+  'AbsoluteTimelines',
+  'AuthorizedClients',
+  'Behaviours',
+  'Calls',
+  'CallTypes',
+  'Clients',
+  'ConstraintParamTypes',
+  'InfoTypes',
+  'OAuthKeys',
+  'ParamTypes',
+  'ParamValues',
+  'Policies',
+  'Profils',
+  'RelativeEvents',
+  'RelativeTimelines',
+  'Renderers',
+  'Roles',
+  'SDIs',
+  'Services',
+  'Sources',
+  'SystemTriggers',
+  'TimelineRunners',
+  'ThemeSDIs',
+  'ThemeZones',
+  'TypeParamTypes',
+  'Users',
+  'UserTriggers',
+  'ZoneContents',
+  'Zones'
+];
 
-exports.models = [];
-exports.models = [];
+exports.hasMany = [
+  ['Users', 'Roles'], // a user has different roles
+  ['Users', 'SDIs'], // a user has access to different SDI's
+  ['Users', 'OAuthKeys'], // a user has access to different OAuthKeys
 
+  ['SDIs', 'Users'], // a SDI can be seen/administrated by different users
+  ['SDIs', 'Zones'], // a SDI contains many zone
+  ['SDIs', 'Profils'], // a SDI can have many profiles
+  ['SDIs', 'AuthorizedClients'],
 
+  ['Zones', 'CallTypes'], // a Zone has many CallTypes and must be able to reach them for administration
+  ['Zones', 'ZoneContents'],
 
-/*var db = require('../models/index.js');
+  ['CallTypes', 'Calls'],
 
-var AbsoluteEvent = db['AbsoluteEvents'],
-  AbsoluteTimeline = db['AbsoluteTimelines'],
-  AuthorizedClient = db['AuthorizedClients'],
-  Behaviour = db['Behaviours'],
-  Call = db['Calls'],
-  CallType = db['CallTypes'],
-  Client = db['Clients'],
-  ConstraintParamType = db['ConstraintParamTypes'],
-  InfoType = db['InfoTypes'],
-  OAuthKey = db['OAuthKeys'],
-  ParamType = db['ParamTypes'],
-  ParamValue = db['ParamValues'],
-  Policy = db['Policies'],
-  Profil = db['Profils'],
-  RelativeEvent = db['RelativeEvents'],
-  RelativeTimeline = db['RelativeTimelines'],
-  Renderer = db['Renderers'],
-  Role = db['Roles'],
-  SDI = db['SDIs'],
-  Service = db['Services'],
-  Source = db['Sources'],
-  SystemTrigger = db['SystemTriggers'],
-  TimelineRunner = db['TimelineRunners'],
-  ThemeSDI = db['ThemeSDIs'],
-  ThemeZone = db['ThemeZones'],
-  TypeParamType = db['TypeParamTypes'],
-  User = db['Users'],
-  UserTrigger = db['UserTriggers'],
-  ZoneContent = db['ZoneContents'],
-  Zone = db['Zones'];
+  ['Sources', 'ParamTypes'], // TODO: a Source can have many ParamType but do we need to be able to reach them ??
+  ['Sources', 'ParamValues', {as: 'defaultParam'}],
+  ['Sources', 'CallTypes'],
 
-exports.init = function() {
-  User.hasMany(Role); // a user has different roles
-  User.hasMany(SDI);  // a user has access to different SDI's
-  User.hasMany(OAuthKey);  // a user has access to different OAuthKeys
+  ['Services', 'Sources'],
 
-  OAuthKey.belongsTo(Service); // an OAuthKey belongs to one Service
+  ['InfoTypes', 'Sources'], // An InfoType has many Sources
+  ['InfoTypes', 'Renderers'], // an InfoType has many Renderers
 
-  SDI.hasMany(User); // a SDI can be seen/administrated by different users
-  SDI.hasMany(Zone); // a SDI contains many zone
-  SDI.hasMany(Profil); // a SDI can have many profiles
-  SDI.belongsTo(ThemeSDI);
-  SDI.hasMany(AuthorizedClient);
+  ['ParamTypes', 'Sources'], // a ParamType is used by several Sources
 
-  ThemeSDI.belongsTo(ThemeZone);
+  ['Calls', 'ParamValues'], // a Call has many ParamValues
 
-  AuthorizedClient.belongsTo(SDI);
-  AuthorizedClient.belongsTo(Profil);
-  Client.belongsTo(Profil);
+  ['Profils', 'ZoneContents'], // a Profil has many ZoneContents
+  ['Profils', 'AuthorizedClients'],
+  ['Profils', 'Clients'],
 
+  ['RelativeTimelines', 'RelativeEvents'],
 
-  Zone.belongsTo(SDI); // a Zone can only belong to one SDI
-  Zone.belongsTo(Behaviour); // a Zone has one Behaviour
-  Zone.hasMany(CallType); // a Zone has many CallTypes and must be able to reach them for administration
-  Zone.hasMany(ZoneContent);
-  Zone.belongsTo(ThemeZone);
-  //Zone.hasMany(Call); // a Zone has many Calls and must be able to reach them for Client
+  ['AbsoluteTimelines', 'AbsoluteEvents'],
 
-  CallType.belongsTo(Zone); // a CallType has one Zone
-  CallType.belongsTo(Source); // a CallType has one Source
-  CallType.belongsTo(Renderer); // a CallType has one Renderer
-  CallType.belongsTo(Policy); // a CallType has one ReceivePolicy
-  CallType.hasMany(Call);
+  ['ZoneContents', 'Profils'] // a ZoneContent belongs to many Profils
+];
 
-  Source.belongsTo(InfoType); // a Source has one InfoType
-  Source.hasMany(ParamType);  // TODO: a Source can have many ParamType but do we need to be able to reach them ??
-  Source.hasMany(ParamValue, {as: 'defaultParam'});
-  Source.belongsTo(Service);
-  Source.hasMany(CallType);
+exports.belongsTo = [
+  ['OAuthKeys', 'Services'], // an OAuthKey belongs to one Service
 
-  Service.hasMany(Source);
+  ['SDIs', 'ThemeSDIs'],
 
-  Renderer.belongsTo(InfoType); // A Renderer has one InfoType
+  ['ThemeSDIs', 'ThemeZones'],
 
-  InfoType.hasMany(Source);  // An InfoType has many Sources
-  InfoType.hasMany(Renderer); // an InfoType has many Renderers
+  ['AuthorizedClients', 'SDIs'],
+  ['AuthorizedClients', 'Profils'],
 
-  ConstraintParamType.belongsTo(TypeParamType); // A constraint applies only on a specific TypeParamType
+  ['Clients', 'Profils'],
 
-  ParamType.belongsTo(TypeParamType, {as: 'type'}); // A paramType has a TypeParamType
-  ParamType.belongsTo(ConstraintParamType, {as: 'constraint'});  // A paramType can have a constraint
-  ParamType.belongsTo(ParamValue, {as: 'defaultValue'}); // a ParamType can have a default value
-  ParamType.hasMany(Source); // a ParamType is used by several Sources
-  //ParamType.hasMany(ParamValue); // A paramType has many values TODO: do we need to be able to reach them?
+  ['Zones', 'SDIs'], // a Zone can only belong to one SDI
+  ['Zones', 'Behaviours'], // a Zone has one Behaviour
+  ['Zones', 'ThemeZones'],
 
-  ParamValue.belongsTo(ParamType); // a ParamValue has one ParamType
+  ['CallTypes', 'Zones'], // a CallType has one Zone
+  ['CallTypes', 'Sources'], // a CallType has one Source
+  ['CallTypes', 'Renderers'], // a CallType has one Renderer
+  ['CallTypes', 'Policies'], // a CallType has one ReceivePolicy
 
-  Call.belongsTo(CallType); // a Call has one specific CallTyp
-  Call.belongsTo(OAuthKey); // a Call can have one specific OAuthKey
-  Call.hasMany(ParamValue); // a Call has many ParamValues
+  ['Sources', 'InfoTypes'], // a Source has one InfoType
+  ['Sources', 'Services'],
 
-  Profil.hasMany(ZoneContent); // a Profil has many ZoneContents
-  Profil.belongsTo(SDI);
-  Profil.hasMany(AuthorizedClient);
-  Profil.hasMany(Client);
+  ['Renderers', 'InfoTypes'], // A Renderer has one InfoType
 
-  RelativeTimeline.hasMany(RelativeEvent);
-  RelativeTimeline.belongsTo(TimelineRunner);
-  RelativeTimeline.belongsTo(UserTrigger);
-  RelativeTimeline.belongsTo(SystemTrigger);
+  ['ConstraintParamTypes', 'TypeParamTypes'], // A constraint applies only on a specific TypeParamType
 
-  AbsoluteTimeline.hasMany(AbsoluteEvent);
+  ['ParamTypes', 'TypeParamTypes', {as: 'type'}], // A paramType has a TypeParamType
+  ['ParamTypes', 'ConstraintParamTypes', {as: 'constraint'}], // A paramType can have a constraint
+  ['ParamTypes', 'ParamValues', {as: 'defaultValue'}], // a ParamType can have a default value,
 
-  AbsoluteEvent.belongsTo(RelativeTimeline);  // An absolute event has one relative timeline
+  ['ParamValues', 'ParamTypes'], // a ParamValue has one ParamType
 
-  RelativeEvent.belongsTo(Call); // A relative event has one call
+  ['Calls', 'CallTypes'], // a Call has one specific CallType
+  ['Calls', 'OAuthKeys'], // a Call can have one specific OAuthKey
 
-  ZoneContent.belongsTo(AbsoluteTimeline);
-  ZoneContent.belongsTo(RelativeTimeline);
-  ZoneContent.belongsTo(Zone);
-  ZoneContent.hasMany(Profil); // a ZoneContent belongs to many Profils
-};*/
+  ['Profils', 'SDIs'],
+
+  ['RelativeTimelines', 'TimelineRunners'],
+  ['RelativeTimelines', 'UserTriggers'],
+  ['RelativeTimelines', 'SystemTriggers'],
+
+  ['RelativeEvents', 'Calls'], // A relative event has one call
+
+  ['AbsoluteEvents', 'RelativeTimelines'], // An absolute event has one relative timeline
+
+  ['ZoneContents', 'AbsoluteTimelines'],
+  ['ZoneContents', 'RelativeTimelines'],
+  ['ZoneContents', 'Zones']
+];
