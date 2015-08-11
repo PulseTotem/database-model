@@ -47,7 +47,7 @@ exports.hasMany = [
   ['CallTypes', 'Calls'],
 
   ['Sources', 'ParamTypes'], // TODO: a Source can have many ParamType but do we need to be able to reach them ??
-  ['Sources', 'ParamValues', {as: 'defaultParam'}],
+  ['Sources', 'ParamValues', {as: { singular: 'DefaultParam', plural: 'DefaultParams' }}],
   ['Sources', 'CallTypes'],
 
   ['Services', 'Sources'],
@@ -98,9 +98,9 @@ exports.belongsTo = [
 
   ['ConstraintParamTypes', 'TypeParamTypes'], // A constraint applies only on a specific TypeParamType
 
-  ['ParamTypes', 'TypeParamTypes', {as: 'type'}], // A paramType has a TypeParamType
-  ['ParamTypes', 'ConstraintParamTypes', {as: 'constraint'}], // A paramType can have a constraint
-  ['ParamTypes', 'ParamValues', {as: 'defaultValue'}], // a ParamType can have a default value,
+  ['ParamTypes', 'TypeParamTypes', {as: 'Type', foreignKey: 'TypeParamTypeId'}], // A paramType has a TypeParamType
+  ['ParamTypes', 'ConstraintParamTypes', {as: 'Constraint', foreignKey: 'ConstraintParamTypeId'}], // A paramType can have a constraint
+  ['ParamTypes', 'ParamValues', {as: 'DefaultValue', foreignKey: 'ParamValueId'}], // a ParamType can have a default value,
 
   ['ParamValues', 'ParamTypes'], // a ParamValue has one ParamType
 

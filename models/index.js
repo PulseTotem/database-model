@@ -5,7 +5,7 @@ var path      = require('path');
 var Sequelize = require('sequelize');
 var basename  = path.basename(module.filename);
 var env       = process.env.NODE_ENV || 'development';
-var config    = require(__dirname + '/../config/config.json')[env];
+var config    = require('../config/config.json')[env];
 
 var sequelize = null;
 if(process.env.DATABASE_URL) {
@@ -15,10 +15,17 @@ if(process.env.DATABASE_URL) {
     protocol: 'postgres',
     port:     match[4],
     host:     match[3],
+    omitNull: true,
     logging: false
   });
 } else {
-  sequelize   = new Sequelize(config.database, config.username, config.password, config);
+  var options = {omitNull: true};
+  for (var attrname in config) {
+    if(attrname != "database" && attrname != "username" && attrname != "password") {
+      options[attrname] = config[attrname];
+    }
+  }
+  sequelize   = new Sequelize(config.database, config.username, config.password, options);
 }
 
 var db        = {};

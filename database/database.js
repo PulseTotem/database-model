@@ -46,16 +46,26 @@ exports.start = function() {
       }
     }
 
+    if(typeof(options.as) != "undefined" && (typeof(options.as.singular) == "undefined" || typeof(options.as.plural) == "undefined")) {
+      console.error("'hasMany' definition between '" + originName + "' and '" + targetName + "' : If you give 'as' option, you need to provide singular and plural values.");
+      process.exit(1);
+    }
+
     origin.hasMany(target, options);
 
     //For a HasMany relation : Endpoint to retrieve all target instances attached to origin instance
     app.get('/' + originName + '/:originId/' + targetName, function(req, res) {
       //console.log('hasMany - get : /' + originName + '/' + req.originId + '/' + targetName);
 
+      var methodAttributeName = target.options.name.plural;
+      if(typeof(options.as) != "undefined") {
+        methodAttributeName = options.as.plural;
+      }
+
       origin.find(req.originId)
         .then(function(originInstance) {
           if(originInstance != null) {
-            originInstance['get' + target.options.name.plural]().then(function(targetInstances) {
+            originInstance['get' + methodAttributeName]().then(function(targetInstances) {
               var result = [];
 
               targetInstances.forEach(function(targetInstance) {
@@ -77,7 +87,12 @@ exports.start = function() {
 
     //For a HasMany relation : Endpoint to add a new target instance to origin instance
     app.put('/' + originName + '/:originId/' + targetName + '/:targetId', function(req, res) {
-      console.log('hasMany - put : /' + originName + '/' + req.originId + '/' + targetName + '/' + req.targetId);
+      //console.log('hasMany - put : /' + originName + '/' + req.originId + '/' + targetName + '/' + req.targetId);
+
+      var methodAttributeName = target.options.name.singular;
+      if(typeof(options.as) != "undefined") {
+        methodAttributeName = options.as.singular;
+      }
 
       origin.find(req.originId)
         .then(function(originInstance) {
@@ -85,8 +100,8 @@ exports.start = function() {
             target.find(req.targetId)
               .then(function(targetInstance) {
                 if(targetInstance != null) {
-                  originInstance['add' + target.options.name.singular](targetInstance).then(function() {
-                    res.end();
+                  originInstance['add' + methodAttributeName](targetInstance).then(function() {
+                    res.json({});
                   }).catch(function(error) {
                     res.status(500).send({'error': JSON.stringify(error)});
                   });
@@ -110,9 +125,12 @@ exports.start = function() {
 
     //For a HasMany relation : Endpoint to remove a target instance to origin instance
     app.delete('/' + originName + '/:originId/' + targetName + '/:targetId', function(req, res) {
-      //Undo association
-      console.log('hasMany - delete : /' + originName + '/' + req.originId + '/' + targetName + '/' + req.targetId);
+      //console.log('hasMany - delete : /' + originName + '/' + req.originId + '/' + targetName + '/' + req.targetId);
 
+      var methodAttributeName = target.options.name.singular;
+      if(typeof(options.as) != "undefined") {
+        methodAttributeName = options.as.singular;
+      }
 
       origin.find(req.originId)
         .then(function(originInstance) {
@@ -120,8 +138,8 @@ exports.start = function() {
             target.find(req.targetId)
               .then(function(targetInstance) {
                 if(targetInstance != null) {
-                  originInstance['remove' + target.options.name.singular](targetInstance).then(function() {
-                    res.end();
+                  originInstance['remove' + methodAttributeName](targetInstance).then(function() {
+                    res.json({});
                   }).catch(function(error) {
                     res.status(500).send({'error': JSON.stringify(error)});
                   });
@@ -162,20 +180,29 @@ exports.start = function() {
     app.get('/' + originName + '/:originId/' + targetName, function(req, res) {
       //console.log('belongsTo - get : /' + originName + '/' + req.originId + '/' + targetName);
 
+      var methodAttributeName = target.options.name.singular;
+      if(typeof(options.as) != "undefined") {
+        methodAttributeName = options.as;
+      }
+
       origin.find(req.originId)
         .then(function(originInstance) {
           if(originInstance != null) {
-            originInstance['get' + target.options.name.singular]().then(function(targetInstance) {
+            originInstance['get' + methodAttributeName]().then(function(targetInstance) {
               res.json(targetInstance.dataValues);
             }).catch(function(error) {
-              res.status(500).send({'error2': JSON.stringify(error)});
+              if(JSON.stringify(error) == "{}") {
+                res.json([]);
+              } else {
+                res.status(500).send({'error': JSON.stringify(error)});
+              }
             });
           } else {
             res.status(404).send({'error': originName + ' with given Id "' + req.originId + '" was not found.'});
           }
         })
         .catch(function(error) {
-          res.status(500).send({'error1': JSON.stringify(error)});
+          res.status(500).send({'error': JSON.stringify(error)});
         });
     });
 
@@ -183,14 +210,19 @@ exports.start = function() {
     app.put('/' + originName + '/:originId/' + targetName + '/:targetId', function(req, res) {
       //console.log('belongsTo - put : /' + originName + '/' + req.originId + '/' + targetName + '/' + req.targetId);
 
+      var methodAttributeName = target.options.name.singular;
+      if(typeof(options.as) != "undefined") {
+        methodAttributeName = options.as;
+      }
+
       origin.find(req.originId)
         .then(function(originInstance) {
           if(originInstance != null) {
             target.find(req.targetId)
               .then(function(targetInstance) {
                 if(targetInstance != null) {
-                  originInstance['set' + target.options.name.singular](targetInstance).then(function() {
-                    res.end();
+                  originInstance['set' + methodAttributeName](targetInstance).then(function() {
+                    res.json({});
                   }).catch(function(error) {
                     res.status(500).send({'error': JSON.stringify(error)});
                   });
@@ -215,13 +247,18 @@ exports.start = function() {
     app.delete('/' + originName + '/:originId/' + targetName + '/:targetId', function(req, res) {
       //console.log('belongsTo - delete : /' + originName + '/' + req.originId + '/' + targetName + '/' + req.targetId);
 
+      var methodAttributeName = target.options.name.singular;
+      if(typeof(options.as) != "undefined") {
+        methodAttributeName = options.as;
+      }
+
       origin.find(req.originId)
         .then(function(originInstance) {
           if(originInstance != null) {
-            originInstance['get' + target.options.name.singular]().then(function(targetInstance) {
+            originInstance['get' + methodAttributeName]().then(function(targetInstance) {
               if(targetInstance != null && targetInstance.id == req.targetId) {
-                originInstance['set' + target.options.name.singular](null).then(function() {
-                  res.end();
+                originInstance['set' + methodAttributeName](null).then(function() {
+                  res.json({});
                 }).catch(function(error) {
                   res.status(500).send({'error': JSON.stringify(error)});
                 });
@@ -231,7 +268,7 @@ exports.start = function() {
 
               res.json(targetInstance.dataValues);
             }).catch(function(error) {
-              res.status(500).send({'error2': JSON.stringify(error)});
+              res.status(500).send({'error': JSON.stringify(error)});
             });
           } else {
             res.status(404).send({'error': originName + ' with given Id "' + req.originId + '" was not found.'});
