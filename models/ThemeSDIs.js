@@ -49,10 +49,12 @@ module.exports = function(sequelize, DataTypes) {
     createdAt: {
       type: DataTypes.DATE,
       allowNull: false,
+      defaultValue: 'now()'
     },
     updatedAt: {
       type: DataTypes.DATE,
       allowNull: false,
+      defaultValue: 'now()'
     },
     ThemeZoneId: {
       type: DataTypes.INTEGER,

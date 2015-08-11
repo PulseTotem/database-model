@@ -24,10 +24,12 @@ module.exports = {
       },
       createdAt: {
         type: DataTypes.DATE,
+        defaultValue: DataTypes.fn('NOW'),
         allowNull: false
       },
       updatedAt: {
         type: DataTypes.DATE,
+        defaultValue: DataTypes.fn('NOW'),
         allowNull: false
       },
       UserId: {
