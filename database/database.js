@@ -226,7 +226,7 @@ exports.start = function() {
                   res.status(500).send({'error': JSON.stringify(error)});
                 });
               } else {
-                res.status(500).send({'error': targetName ' with id "' + req.targetId + '" is not linked to ' + originName + ' with id "' + req.originId + '"'});
+                res.status(500).send({'error': targetName + ' with id "' + req.targetId + '" is not linked to ' + originName + ' with id "' + req.originId + '"'});
               }
 
               res.json(targetInstance.dataValues);
