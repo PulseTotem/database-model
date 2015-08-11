@@ -1,113 +1,114 @@
-var AbsoluteEvent = require('../tables/absoluteEvent.js'),
-	AbsoluteTimeline = require('../tables/absoluteTimeline.js'),
-	AuthorizedClient = require('../tables/authorizedClient.js'),
-	Behaviour = require('../tables/behaviour.js'),
-	Call = require('../tables/call.js'),
-	CallType = require('../tables/callType.js'),
-	Client = require('../tables/client.js'),
-    ConstraintParamType = require('../tables/constraintParamType.js'),
-    InfoType = require('../tables/infoType.js'),
-    OAuthKey = require('../tables/oAuthKey.js'),
-	ParamType = require('../tables/paramType.js'),
-    ParamValue = require('../tables/paramValue.js'),
-	Policy = require('../tables/policy.js'),
-    Profil = require('../tables/profil.js'),
-	RelativeEvent = require('../tables/relativeEvent.js'),
-	RelativeTimeline = require('../tables/relativeTimeline.js'),
-    Renderer = require('../tables/renderer.js'),
-    Role = require('../tables/role.js'),
-    SDI = require('../tables/sdi.js'),
-	Service = require('../tables/service.js'),
-    Source = require('../tables/source.js'),
-	SystemTrigger = require('../tables/systemTrigger.js'),
-	TimelineRunner = require('../tables/timelineRunner.js'),
-	ThemeSDI = require('../tables/themeSDI.js'),
-	ThemeZone = require('../tables/themeZone.js'),
-    TypeParamType = require('../tables/typeParamType.js'),
-	User = require('../tables/user.js'),
-	UserTrigger = require('../tables/userTrigger.js'),
-	Zone = require('../tables/zone.js'),
-	ZoneContent = require('../tables/zoneContent.js');
+var db = require('../models/index.js');
+
+var AbsoluteEvent = db['AbsoluteEvents'],
+  AbsoluteTimeline = db['AbsoluteTimelines'],
+  AuthorizedClient = db['AuthorizedClients'],
+  Behaviour = db['Behaviours'],
+  Call = db['Calls'],
+  CallType = db['CallTypes'],
+  Client = db['Clients'],
+  ConstraintParamType = db['ConstraintParamTypes'],
+  InfoType = db['InfoTypes'],
+  OAuthKey = db['OAuthKeys'],
+  ParamType = db['ParamTypes'],
+  ParamValue = db['ParamValues'],
+  Policy = db['Policies'],
+  Profil = db['Profils'],
+  RelativeEvent = db['RelativeEvents'],
+  RelativeTimeline = db['RelativeTimelines'],
+  Renderer = db['Renderers'],
+  Role = db['Roles'],
+  SDI = db['SDIs'],
+  Service = db['Services'],
+  Source = db['Sources'],
+  SystemTrigger = db['SystemTriggers'],
+  TimelineRunner = db['TimelineRunners'],
+  ThemeSDI = db['ThemeSDIs'],
+  ThemeZone = db['ThemeZones'],
+  TypeParamType = db['TypeParamTypes'],
+  User = db['Users'],
+  UserTrigger = db['UserTriggers'],
+  ZoneContent = db['ZoneContents'],
+  Zone = db['Zones'];
 
 exports.init = function() {
-	User.schema.hasMany(Role.schema); // a user has different roles
-	User.schema.hasMany(SDI.schema);  // a user has access to different SDI's
-  User.schema.hasMany(OAuthKey.schema);  // a user has access to different OAuthKeys
+  User.hasMany(Role); // a user has different roles
+  User.hasMany(SDI);  // a user has access to different SDI's
+  User.hasMany(OAuthKey);  // a user has access to different OAuthKeys
 
-  OAuthKey.schema.belongsTo(Service.schema); // an OAuthKey belongs to one Service
+  OAuthKey.belongsTo(Service); // an OAuthKey belongs to one Service
 
-	SDI.schema.hasMany(User.schema); // a SDI can be seen/administrated by different users
-	SDI.schema.hasMany(Zone.schema); // a SDI contains many zone
-	SDI.schema.hasMany(Profil.schema); // a SDI can have many profiles
-	SDI.schema.belongsTo(ThemeSDI.schema);
-	SDI.schema.hasMany(AuthorizedClient.schema);
+  SDI.hasMany(User); // a SDI can be seen/administrated by different users
+  SDI.hasMany(Zone); // a SDI contains many zone
+  SDI.hasMany(Profil); // a SDI can have many profiles
+  SDI.belongsTo(ThemeSDI);
+  SDI.hasMany(AuthorizedClient);
 
-	ThemeSDI.schema.belongsTo(ThemeZone.schema);
+  ThemeSDI.belongsTo(ThemeZone);
 
-	AuthorizedClient.schema.belongsTo(SDI.schema);
-	AuthorizedClient.schema.belongsTo(Profil.schema);
-	Client.schema.belongsTo(Profil.schema);
+  AuthorizedClient.belongsTo(SDI);
+  AuthorizedClient.belongsTo(Profil);
+  Client.belongsTo(Profil);
 
 
-	Zone.schema.belongsTo(SDI.schema); // a Zone can only belong to one SDI
-	Zone.schema.belongsTo(Behaviour.schema); // a Zone has one Behaviour
-	Zone.schema.hasMany(CallType.schema); // a Zone has many CallTypes and must be able to reach them for administration
-	Zone.schema.hasMany(ZoneContent.schema);
-	Zone.schema.belongsTo(ThemeZone.schema);
-	//Zone.schema.hasMany(Call.schema); // a Zone has many Calls and must be able to reach them for Client
+  Zone.belongsTo(SDI); // a Zone can only belong to one SDI
+  Zone.belongsTo(Behaviour); // a Zone has one Behaviour
+  Zone.hasMany(CallType); // a Zone has many CallTypes and must be able to reach them for administration
+  Zone.hasMany(ZoneContent);
+  Zone.belongsTo(ThemeZone);
+  //Zone.hasMany(Call); // a Zone has many Calls and must be able to reach them for Client
 
-	CallType.schema.belongsTo(Zone.schema); // a CallType has one Zone
-	CallType.schema.belongsTo(Source.schema); // a CallType has one Source
-	CallType.schema.belongsTo(Renderer.schema); // a CallType has one Renderer
-	CallType.schema.belongsTo(Policy.schema); // a CallType has one ReceivePolicy
-	CallType.schema.hasMany(Call.schema);
+  CallType.belongsTo(Zone); // a CallType has one Zone
+  CallType.belongsTo(Source); // a CallType has one Source
+  CallType.belongsTo(Renderer); // a CallType has one Renderer
+  CallType.belongsTo(Policy); // a CallType has one ReceivePolicy
+  CallType.hasMany(Call);
 
-	Source.schema.belongsTo(InfoType.schema); // a Source has one InfoType
-	Source.schema.hasMany(ParamType.schema);  // TODO: a Source can have many ParamType but do we need to be able to reach them ??
-	Source.schema.hasMany(ParamValue.schema, {as: 'defaultParam'});
-	Source.schema.belongsTo(Service.schema);
-	Source.schema.hasMany(CallType.schema);
+  Source.belongsTo(InfoType); // a Source has one InfoType
+  Source.hasMany(ParamType);  // TODO: a Source can have many ParamType but do we need to be able to reach them ??
+  Source.hasMany(ParamValue, {as: 'defaultParam'});
+  Source.belongsTo(Service);
+  Source.hasMany(CallType);
 
-	Service.schema.hasMany(Source.schema);
+  Service.hasMany(Source);
 
-	Renderer.schema.belongsTo(InfoType.schema); // A Renderer has one InfoType
+  Renderer.belongsTo(InfoType); // A Renderer has one InfoType
 
-	InfoType.schema.hasMany(Source.schema);  // An InfoType has many Sources
-	InfoType.schema.hasMany(Renderer.schema); // an InfoType has many Renderers
+  InfoType.hasMany(Source);  // An InfoType has many Sources
+  InfoType.hasMany(Renderer); // an InfoType has many Renderers
 
-	ConstraintParamType.schema.belongsTo(TypeParamType.schema); // A constraint applies only on a specific TypeParamType
+  ConstraintParamType.belongsTo(TypeParamType); // A constraint applies only on a specific TypeParamType
 
-	ParamType.schema.belongsTo(TypeParamType.schema, {as: 'type'}); // A paramType has a TypeParamType
-	ParamType.schema.belongsTo(ConstraintParamType.schema, {as: 'constraint'});  // A paramType can have a constraint
-	ParamType.schema.belongsTo(ParamValue.schema, {as: 'defaultValue'}); // a ParamType can have a default value
-  ParamType.schema.hasMany(Source.schema); // a ParamType is used by several Sources
-	//ParamType.schema.hasMany(ParamValue.schema); // A paramType has many values TODO: do we need to be able to reach them?
+  ParamType.belongsTo(TypeParamType, {as: 'type'}); // A paramType has a TypeParamType
+  ParamType.belongsTo(ConstraintParamType, {as: 'constraint'});  // A paramType can have a constraint
+  ParamType.belongsTo(ParamValue, {as: 'defaultValue'}); // a ParamType can have a default value
+  ParamType.hasMany(Source); // a ParamType is used by several Sources
+  //ParamType.hasMany(ParamValue); // A paramType has many values TODO: do we need to be able to reach them?
 
-	ParamValue.schema.belongsTo(ParamType.schema); // a ParamValue has one ParamType
+  ParamValue.belongsTo(ParamType); // a ParamValue has one ParamType
 
-	Call.schema.belongsTo(CallType.schema); // a Call has one specific CallTyp
-	Call.schema.belongsTo(OAuthKey.schema); // a Call can have one specific OAuthKey
-	Call.schema.hasMany(ParamValue.schema); // a Call has many ParamValues
+  Call.belongsTo(CallType); // a Call has one specific CallTyp
+  Call.belongsTo(OAuthKey); // a Call can have one specific OAuthKey
+  Call.hasMany(ParamValue); // a Call has many ParamValues
 
-	Profil.schema.hasMany(ZoneContent.schema); // a Profil has many ZoneContents
-	Profil.schema.belongsTo(SDI.schema);
-	Profil.schema.hasMany(AuthorizedClient.schema);
-	Profil.schema.hasMany(Client.schema);
+  Profil.hasMany(ZoneContent); // a Profil has many ZoneContents
+  Profil.belongsTo(SDI);
+  Profil.hasMany(AuthorizedClient);
+  Profil.hasMany(Client);
 
-	RelativeTimeline.schema.hasMany(RelativeEvent.schema);
-	RelativeTimeline.schema.belongsTo(TimelineRunner.schema);
-	RelativeTimeline.schema.belongsTo(UserTrigger.schema);
-	RelativeTimeline.schema.belongsTo(SystemTrigger.schema);
+  RelativeTimeline.hasMany(RelativeEvent);
+  RelativeTimeline.belongsTo(TimelineRunner);
+  RelativeTimeline.belongsTo(UserTrigger);
+  RelativeTimeline.belongsTo(SystemTrigger);
 
-	AbsoluteTimeline.schema.hasMany(AbsoluteEvent.schema);
+  AbsoluteTimeline.hasMany(AbsoluteEvent);
 
-	AbsoluteEvent.schema.belongsTo(RelativeTimeline.schema);  // An absolute event has one relative timeline
+  AbsoluteEvent.belongsTo(RelativeTimeline);  // An absolute event has one relative timeline
 
-	RelativeEvent.schema.belongsTo(Call.schema); // A relative event has one call
+  RelativeEvent.belongsTo(Call); // A relative event has one call
 
-	ZoneContent.schema.belongsTo(AbsoluteTimeline.schema);
-	ZoneContent.schema.belongsTo(RelativeTimeline.schema);
-	ZoneContent.schema.belongsTo(Zone.schema);
-  ZoneContent.schema.hasMany(Profil.schema); // a ZoneContent belongs to many Profils
-
+  ZoneContent.belongsTo(AbsoluteTimeline);
+  ZoneContent.belongsTo(RelativeTimeline);
+  ZoneContent.belongsTo(Zone);
+  ZoneContent.hasMany(Profil); // a ZoneContent belongs to many Profils
 };
