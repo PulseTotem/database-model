@@ -1,4 +1,4 @@
 node_modules
 .idea
-database/connection_infos.json
-dbBackups/*
+config/config.json
+dbBackups
