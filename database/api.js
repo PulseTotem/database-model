@@ -7,6 +7,8 @@ exports.models = [
   'CallTypes',
   'Clients',
   'ConstraintParamTypes',
+  'CMSFiles',
+  'CMSRepositories',
   'InfoTypes',
   'OAuthKeys',
   'ParamTypes',
@@ -67,7 +69,12 @@ exports.hasMany = [
 
   ['AbsoluteTimelines', 'AbsoluteEvents'],
 
-  ['ZoneContents', 'Profils'] // a ZoneContent belongs to many Profils
+  ['ZoneContents', 'Profils'], // a ZoneContent belongs to many Profils
+
+  ['CMSRepositories', 'Users'], // a CMSRepository can be seen/administrated by different users
+  ['Users', 'CMSRepositories'], // a User can have access to many CMSRepositories
+  ['Users', 'CMSFiles', {as: { singular: 'UploadedFile', plural: 'UploadedFiles' }}],
+  ['CMSRepositories', 'CMSFiles']
 ];
 
 exports.belongsTo = [
@@ -119,5 +126,17 @@ exports.belongsTo = [
 
   ['ZoneContents', 'AbsoluteTimelines'],
   ['ZoneContents', 'RelativeTimelines'],
-  ['ZoneContents', 'Zones']
+  ['ZoneContents', 'Zones'],
+  ['CMSFiles', 'Users', {as: 'UploadedBy', foreignKey: 'UserId'}],
+  ['CMSFiles', 'CMSRepositories'],
+
+  ['Calls', 'Calls', {as: 'CloneOrigine', foreignKey: 'CloneOrigineId'}],
+  ['CallTypes', 'CallTypes', {as: 'CloneOrigine', foreignKey: 'CloneOrigineId'}],
+  ['ParamValues', 'ParamValues', {as: 'CloneOrigine', foreignKey: 'CloneOrigineId'}],
+  ['Profils', 'Profils', {as: 'CloneOrigine', foreignKey: 'CloneOrigineId'}],
+  ['RelativeEvents', 'RelativeEvents', {as: 'CloneOrigine', foreignKey: 'CloneOrigineId'}],
+  ['RelativeTimelines', 'RelativeTimelines', {as: 'CloneOrigine', foreignKey: 'CloneOrigineId'}],
+  ['SDIs', 'SDIs', {as: 'CloneOrigine', foreignKey: 'CloneOrigineId'}],
+  ['ZoneContents', 'ZoneContents', {as: 'CloneOrigine', foreignKey: 'CloneOrigineId'}],
+  ['Zones', 'Zones', {as: 'CloneOrigine', foreignKey: 'CloneOrigineId'}]
 ];
