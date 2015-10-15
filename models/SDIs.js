@@ -35,6 +35,10 @@ module.exports = function(sequelize, DataTypes) {
     ThemeSDIId: {
       type: DataTypes.INTEGER,
       allowNull: true,
+    },
+    CloneOrigineId: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
     }
   });
 };
