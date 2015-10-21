@@ -69,12 +69,12 @@ exports.hasMany = [
 
   ['AbsoluteTimelines', 'AbsoluteEvents'],
 
-  ['ZoneContents', 'Profils'], // a ZoneContent belongs to many Profils
+  ['ZoneContents', 'Profils'] // a ZoneContent belongs to many Profils
 
   //['CMSRepositories', 'Users'], // a CMSRepository can be seen/administrated by different users
   //['Users', 'CMSRepositories'], // a User can have access to many CMSRepositories
   //['Users', 'CMSFiles', {as: { singular: 'UploadedFile', plural: 'UploadedFiles' }}],
-  ['CMSRepositories', 'CMSFiles']
+  //['CMSRepositories', 'CMSFiles']
 ];
 
 exports.belongsTo = [
