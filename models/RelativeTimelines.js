@@ -35,6 +35,10 @@ module.exports = function(sequelize, DataTypes) {
     SystemTriggerId: {
       type: DataTypes.INTEGER,
       allowNull: true,
+    },
+    CloneOrigineId: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
     }
   });
 };

@@ -43,6 +43,10 @@ module.exports = function(sequelize, DataTypes) {
     PolicyId: {
       type: DataTypes.INTEGER,
       allowNull: true,
+    },
+    CloneOrigineId: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
     }
   });
 };
