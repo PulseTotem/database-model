@@ -7,8 +7,8 @@ exports.models = [
   'CallTypes',
   'Clients',
   'ConstraintParamTypes',
-  'CMSFiles',
-  'CMSRepositories',
+  //'CMSFiles',
+  //'CMSRepositories',
   'InfoTypes',
   'OAuthKeys',
   'ParamTypes',
@@ -71,9 +71,9 @@ exports.hasMany = [
 
   ['ZoneContents', 'Profils'], // a ZoneContent belongs to many Profils
 
-  ['CMSRepositories', 'Users'], // a CMSRepository can be seen/administrated by different users
-  ['Users', 'CMSRepositories'], // a User can have access to many CMSRepositories
-  ['Users', 'CMSFiles', {as: { singular: 'UploadedFile', plural: 'UploadedFiles' }}],
+  //['CMSRepositories', 'Users'], // a CMSRepository can be seen/administrated by different users
+  //['Users', 'CMSRepositories'], // a User can have access to many CMSRepositories
+  //['Users', 'CMSFiles', {as: { singular: 'UploadedFile', plural: 'UploadedFiles' }}],
   ['CMSRepositories', 'CMSFiles']
 ];
 
@@ -127,8 +127,8 @@ exports.belongsTo = [
   ['ZoneContents', 'AbsoluteTimelines'],
   ['ZoneContents', 'RelativeTimelines'],
   ['ZoneContents', 'Zones'],
-  ['CMSFiles', 'Users', {as: 'UploadedBy', foreignKey: 'UserId'}],
-  ['CMSFiles', 'CMSRepositories'],
+  //['CMSFiles', 'Users', {as: 'UploadedBy', foreignKey: 'UserId'}],
+  //['CMSFiles', 'CMSRepositories'],
 
   ['Calls', 'Calls', {as: 'CloneOrigine', foreignKey: 'CloneOrigineId'}],
   ['CallTypes', 'CallTypes', {as: 'CloneOrigine', foreignKey: 'CloneOrigineId'}],
