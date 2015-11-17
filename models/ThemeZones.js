@@ -63,6 +63,10 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.DATE,
       allowNull: false,
       defaultValue: 'now()'
+    },
+    borderRadius: {
+      type: DataTypes.STRING,
+      allowNull: true,
     }
   });
 };
