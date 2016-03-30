@@ -68,6 +68,8 @@ exports.hasMany = [
 
   ['RelativeTimelines', 'RelativeEvents'],
 
+  ['Renderers', 'RendererThemes'],
+
   ['AbsoluteTimelines', 'AbsoluteEvents'],
 
   ['ZoneContents', 'Profils'] // a ZoneContent belongs to many Profils
@@ -104,6 +106,7 @@ exports.belongsTo = [
   ['Sources', 'Services'],
 
   ['Renderers', 'InfoTypes'], // A Renderer has one InfoType
+  ['RendererThemes', 'Renderers'],
 
   ['ConstraintParamTypes', 'TypeParamTypes'], // A constraint applies only on a specific TypeParamType
 
