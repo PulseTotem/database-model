@@ -1,7 +1,7 @@
 /* jshint indent: 2 */
 
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('Calls', { 
+  return sequelize.define('RendererThemes', { 
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true
@@ -23,22 +23,6 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.DATE,
       allowNull: false,
       defaultValue: 'now()'
-    },
-    CallTypeId: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-    },
-    OAuthKeyId: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-    },
-    CloneOrigineId: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-    },
-    RendererThemeId: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
     }
   });
 };

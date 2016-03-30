@@ -18,6 +18,7 @@ exports.models = [
   'RelativeEvents',
   'RelativeTimelines',
   'Renderers',
+  'RendererThemes',
   'Roles',
   'SDIs',
   'Services',
@@ -96,6 +97,7 @@ exports.belongsTo = [
   ['CallTypes', 'Zones'], // a CallType has one Zone
   ['CallTypes', 'Sources'], // a CallType has one Source
   ['CallTypes', 'Renderers'], // a CallType has one Renderer
+  ['CallTypes', 'RendererThemes'], // a CallType has one RendererTheme
   ['CallTypes', 'Policies'], // a CallType has one ReceivePolicy
 
   ['Sources', 'InfoTypes'], // a Source has one InfoType
@@ -113,6 +115,7 @@ exports.belongsTo = [
 
   ['Calls', 'CallTypes'], // a Call has one specific CallType
   ['Calls', 'OAuthKeys'], // a Call can have one specific OAuthKey
+  ['Calls', 'RendererThemes'], // a Call has one specific RendererTheme
 
   ['Profils', 'SDIs'],
 
