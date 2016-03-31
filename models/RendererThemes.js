@@ -1,16 +1,12 @@
 /* jshint indent: 2 */
 
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('CallTypes', { 
+  return sequelize.define('RendererThemes', { 
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true
     },
     name: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    description: {
       type: DataTypes.STRING,
       allowNull: true,
     },
@@ -28,27 +24,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       defaultValue: 'now()'
     },
-    ZoneId: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-    },
-    SourceId: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-    },
     RendererId: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-    },
-    PolicyId: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-    },
-    CloneOrigineId: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-    },
-    RendererThemeId: {
       type: DataTypes.INTEGER,
       allowNull: true,
     }
