@@ -6,10 +6,6 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.INTEGER,
       primaryKey: true
     },
-    name: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
     complete: {
       type: DataTypes.BOOLEAN,
       allowNull: true,
@@ -26,6 +22,10 @@ module.exports = function(sequelize, DataTypes) {
     },
     RendererId: {
       type: DataTypes.INTEGER,
+      allowNull: true,
+    },
+    name: {
+      type: DataTypes.STRING,
       allowNull: true,
     }
   });
