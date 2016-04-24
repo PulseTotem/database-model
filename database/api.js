@@ -5,10 +5,7 @@ exports.models = [
   'Behaviours',
   'Calls',
   'CallTypes',
-  'Clients',
   'ConstraintParamTypes',
-  //'CMSFiles',
-  //'CMSRepositories',
   'InfoTypes',
   'OAuthKeys',
   'ParamTypes',
@@ -64,7 +61,6 @@ exports.hasMany = [
 
   ['Profils', 'ZoneContents'], // a Profil has many ZoneContents
   ['Profils', 'AuthorizedClients'],
-  ['Profils', 'Clients'],
 
   ['RelativeTimelines', 'RelativeEvents'],
 
@@ -89,8 +85,6 @@ exports.belongsTo = [
 
   ['AuthorizedClients', 'SDIs'],
   ['AuthorizedClients', 'Profils'],
-
-  ['Clients', 'Profils'],
 
   ['Zones', 'SDIs'], // a Zone can only belong to one SDI
   ['Zones', 'Behaviours'], // a Zone has one Behaviour
