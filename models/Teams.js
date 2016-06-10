@@ -1,28 +1,12 @@
 /* jshint indent: 2 */
 
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('Users', { 
+  return sequelize.define('Teams', { 
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true
     },
-    username: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    email: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    password: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    token: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    lastIp: {
+    name: {
       type: DataTypes.STRING,
       allowNull: true,
     },
@@ -40,15 +24,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       defaultValue: 'now()'
     },
-    cmsAuthkey: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    cmsId: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    DefaultTeamId: {
+    OwnerId: {
       type: DataTypes.INTEGER,
       allowNull: true,
     }

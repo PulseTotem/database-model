@@ -21,6 +21,7 @@ exports.models = [
   'Services',
   'Sources',
   'SystemTriggers',
+  'Teams',
   'TimelineRunners',
   'ThemeSDIs',
   'ThemeZones',
@@ -32,6 +33,10 @@ exports.models = [
 ];
 
 exports.hasMany = [
+  ['Teams', 'Users'], // a Team has many Users
+  ['Users', 'Teams'], // a user belongs to many Teams
+
+
   ['Users', 'Roles'], // a user has different roles
   ['Users', 'SDIs'], // a user has access to different SDI's
   ['Users', 'OAuthKeys'], // a user has access to different OAuthKeys
@@ -77,6 +82,9 @@ exports.hasMany = [
 ];
 
 exports.belongsTo = [
+  ['Teams', {model : 'Users', as: 'Owners'}, {as: 'Owner', foreignKey: 'OwnerId'}],
+  ['Users', {model: 'Teams', as: 'DefaultTeams'}, {as: 'DefaultTeam', foreignKey: 'DefaultTeamId'}],
+
   ['OAuthKeys', 'Services'], // an OAuthKey belongs to one Service
 
   ['SDIs', 'ThemeSDIs'],
