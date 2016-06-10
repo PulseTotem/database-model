@@ -31,6 +31,10 @@ module.exports = function(sequelize, DataTypes) {
     TypeParamTypeId: {
       type: DataTypes.INTEGER,
       allowNull: true,
+    },
+    values: {
+      type: DataTypes.STRING,
+      allowNull: true,
     }
   });
 };
