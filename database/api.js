@@ -16,7 +16,6 @@ exports.models = [
   'RelativeTimelines',
   'Renderers',
   'RendererThemes',
-  'Roles',
   'SDIs',
   'Services',
   'Sources',
@@ -36,8 +35,6 @@ exports.hasMany = [
   ['Teams', 'Users'], // a Team has many Users
   ['Users', 'Teams'], // a user belongs to many Teams
 
-
-  ['Users', 'Roles'], // a user has different roles
   ['Users', 'SDIs'], // a user has access to different SDI's
   ['Users', 'OAuthKeys'], // a user has access to different OAuthKeys
 
