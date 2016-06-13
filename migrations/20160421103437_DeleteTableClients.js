@@ -1,6 +1,8 @@
 module.exports = {
-  up: function(migration, DataTypes) {
-    migration.dropTable("Clients");
+  up: function(migration, DataTypes, done) {
+    migration.dropTable("Clients").then(function(results) {
+      done();
+    });
   },
 
   down: function(migration, DataTypes) {

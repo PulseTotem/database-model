@@ -1,5 +1,5 @@
 module.exports = {
-  up: function(migration, DataTypes) {
+  up: function(migration, DataTypes, done) {
     migration.addColumn(
       'SDIs',
       'TeamId',
@@ -7,7 +7,9 @@ module.exports = {
         type: DataTypes.INTEGER,
         allowNull: true
       }
-    );
+    ).then(function(results) {
+        done();
+      });
   },
 
   down: function(migration, DataTypes) {
