@@ -18,14 +18,6 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING,
       allowNull: true,
     },
-    oauth: {
-      type: DataTypes.BOOLEAN,
-      allowNull: true,
-    },
-    provider: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
     logo: {
       type: DataTypes.STRING,
       allowNull: true,

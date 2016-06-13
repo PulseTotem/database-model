@@ -1,7 +1,7 @@
 /* jshint indent: 2 */
 
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('SDIsUsers', { 
+  return sequelize.define('OAuthKeysTeams', { 
     createdAt: {
       type: DataTypes.DATE,
       allowNull: false,
@@ -12,11 +12,11 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       defaultValue: 'now()'
     },
-    SDIId: {
+    OAuthKeyId: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    UserId: {
+    TeamId: {
       type: DataTypes.INTEGER,
       allowNull: false,
     }

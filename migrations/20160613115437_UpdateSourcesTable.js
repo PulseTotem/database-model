@@ -1,10 +1,10 @@
 module.exports = {
   up: function(migration, DataTypes, done) {
     migration.addColumn(
-      'ThemeZones',
-      'borderRadius',
+      'Sources',
+      'ProviderId',
       {
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
         allowNull: true
       }
     ).then(function(results) {
@@ -14,8 +14,8 @@ module.exports = {
 
   down: function(migration, DataTypes) {
     migration.removeColumn(
-      'ThemeZones',
-      'borderRadius'
+      'Sources',
+      'ProviderId'
     );
   }
 }

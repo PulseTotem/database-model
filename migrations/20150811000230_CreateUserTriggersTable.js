@@ -1,5 +1,5 @@
 module.exports = {
-  up: function(migration, DataTypes) {
+  up: function(migration, DataTypes, done) {
     migration.createTable('UserTriggers', {
       id: {
         type: DataTypes.INTEGER,
@@ -28,7 +28,9 @@ module.exports = {
         type: DataTypes.DATE,
         defaultValue: DataTypes.fn('NOW'),
         allowNull: false
-      },
+      }
+    }).then(function(results) {
+      done();
     });
   },
 

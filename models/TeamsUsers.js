@@ -1,19 +1,7 @@
 /* jshint indent: 2 */
 
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('Roles', { 
-    id: {
-      type: DataTypes.INTEGER,
-      primaryKey: true
-    },
-    name: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    complete: {
-      type: DataTypes.BOOLEAN,
-      allowNull: true,
-    },
+  return sequelize.define('TeamsUsers', { 
     createdAt: {
       type: DataTypes.DATE,
       allowNull: false,
@@ -24,9 +12,13 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       defaultValue: 'now()'
     },
+    TeamId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
     UserId: {
       type: DataTypes.INTEGER,
-      allowNull: true,
+      allowNull: false,
     }
   });
 };

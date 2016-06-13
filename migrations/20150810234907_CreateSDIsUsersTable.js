@@ -1,5 +1,5 @@
 module.exports = {
-  up: function(migration, DataTypes) {
+  up: function(migration, DataTypes, done) {
     migration.createTable('SDIsUsers', {
       createdAt: {
         type: DataTypes.DATE,
@@ -19,6 +19,8 @@ module.exports = {
         type: DataTypes.INTEGER,
         allowNull: false
       }
+    }).then(function(results) {
+      done();
     });
   },
 

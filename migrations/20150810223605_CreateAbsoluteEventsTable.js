@@ -1,5 +1,5 @@
 module.exports = {
-  up: function(migration, DataTypes) {
+  up: function(migration, DataTypes, done) {
     migration.createTable('AbsoluteEvents', {
         id: {
           type: DataTypes.INTEGER,
@@ -42,7 +42,9 @@ module.exports = {
           allowNull: true
         }
       }
-    );
+    ).then(function(results) {
+        done();
+      });
   },
 
   down: function(migration, DataTypes) {

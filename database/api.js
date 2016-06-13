@@ -1,7 +1,6 @@
 exports.models = [
   'AbsoluteEvents',
   'AbsoluteTimelines',
-  'AuthorizedClients',
   'Behaviours',
   'Calls',
   'CallTypes',
@@ -12,15 +11,16 @@ exports.models = [
   'ParamValues',
   'Policies',
   'Profils',
+  'Providers',
   'RelativeEvents',
   'RelativeTimelines',
   'Renderers',
   'RendererThemes',
-  'Roles',
   'SDIs',
   'Services',
   'Sources',
   'SystemTriggers',
+  'Teams',
   'TimelineRunners',
   'ThemeSDIs',
   'ThemeZones',
@@ -32,14 +32,17 @@ exports.models = [
 ];
 
 exports.hasMany = [
-  ['Users', 'Roles'], // a user has different roles
-  ['Users', 'SDIs'], // a user has access to different SDI's
+  ['Teams', 'Users'], // a Team has many Users
+  ['Users', 'Teams'], // a user belongs to many Teams
+  ['Teams', 'SDIs'], // a Team has access to different SDI's
+
   ['Users', 'OAuthKeys'], // a user has access to different OAuthKeys
 
-  ['SDIs', 'Users'], // a SDI can be seen/administrated by different users
+  ['Teams', 'OAuthKeys'], // a Team has access to different OAuthKeys
+  ['OAuthKeys', 'Teams'], // an OAuthKey belongs to many Teams
+
   ['SDIs', 'Zones'], // a SDI contains many zone
   ['SDIs', 'Profils'], // a SDI can have many profiles
-  ['SDIs', 'AuthorizedClients'],
 
   ['Zones', 'CallTypes'], // a Zone has many CallTypes and must be able to reach them for administration
   ['Zones', 'ZoneContents'],
@@ -52,6 +55,8 @@ exports.hasMany = [
 
   ['Services', 'Sources'],
 
+  ['Providers', 'Sources'], // a Provider can be attached to multiple Sources
+
   ['InfoTypes', 'Sources'], // An InfoType has many Sources
   ['InfoTypes', 'Renderers'], // an InfoType has many Renderers
 
@@ -60,7 +65,6 @@ exports.hasMany = [
   ['Calls', 'ParamValues'], // a Call has many ParamValues
 
   ['Profils', 'ZoneContents'], // a Profil has many ZoneContents
-  ['Profils', 'AuthorizedClients'],
 
   ['RelativeTimelines', 'RelativeEvents'],
 
@@ -77,14 +81,16 @@ exports.hasMany = [
 ];
 
 exports.belongsTo = [
-  ['OAuthKeys', 'Services'], // an OAuthKey belongs to one Service
+  ['Teams', {model : 'Users', as: 'Owners'}, {as: 'Owner', foreignKey: 'OwnerId'}],
+  ['Users', {model: 'Teams', as: 'DefaultTeams'}, {as: 'DefaultTeam', foreignKey: 'DefaultTeamId'}],
+
+  ['SDIs', 'Teams'], // a SDI can be seen/administrated by only one Team
+
+  ['OAuthKeys', 'Providers'], // an OAuthKey belongs to one Provider
 
   ['SDIs', 'ThemeSDIs'],
 
   ['ThemeSDIs', 'ThemeZones'],
-
-  ['AuthorizedClients', 'SDIs'],
-  ['AuthorizedClients', 'Profils'],
 
   ['Zones', 'SDIs'], // a Zone can only belong to one SDI
   ['Zones', 'Behaviours'], // a Zone has one Behaviour
@@ -97,7 +103,8 @@ exports.belongsTo = [
   ['CallTypes', 'Policies'], // a CallType has one ReceivePolicy
 
   ['Sources', 'InfoTypes'], // a Source has one InfoType
-  ['Sources', 'Services'],
+  ['Sources', 'Services'], // a Source belongs to a Service
+  ['Sources', 'Providers'], // a Source can be attached to one Provider
 
   ['Renderers', 'InfoTypes'], // A Renderer has one InfoType
   ['RendererThemes', 'Renderers'],

@@ -1,20 +1,6 @@
 module.exports = {
   up: function(migration, DataTypes, done) {
-    migration.createTable('RendererThemes', {
-      id: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true
-      },
-      name: {
-        type: DataTypes.STRING,
-        unique: true,
-        allowNull: true
-      },
-      complete: {
-        type: DataTypes.BOOLEAN,
-        allowNull: true
-      },
+    migration.createTable('OAuthKeysTeams', {
       createdAt: {
         type: DataTypes.DATE,
         defaultValue: DataTypes.fn('NOW'),
@@ -24,6 +10,16 @@ module.exports = {
         type: DataTypes.DATE,
         defaultValue: DataTypes.fn('NOW'),
         allowNull: false
+      },
+      OAuthKeyId: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        allowNull: false
+      },
+      TeamId: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        allowNull: false
       }
     }).then(function(results) {
       done();
@@ -31,6 +27,6 @@ module.exports = {
   },
 
   down: function(migration, DataTypes) {
-    migration.dropTable('RendererThemes');
+    migration.dropTable('OAuthKeysTeams');
   }
 }
