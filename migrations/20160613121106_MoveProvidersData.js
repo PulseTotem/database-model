@@ -7,8 +7,7 @@ module.exports = {
 
       if(services.length > 0) {
 
-        var nbServiceDone = 0;
-
+        var serviceIndex = 0;
 
         var updateAllSources = function(service, providerId) {
           //Select all Sources linked to current Service
@@ -25,9 +24,11 @@ module.exports = {
                   nbSourceDone++;
 
                   if(nbSourceDone == sources.length) {
-                    nbServiceDone++;
+                    serviceIndex++;
 
-                    if(nbServiceDone == services.length) {
+                    if(serviceIndex < services.length) {
+                      makeJobForService(services[serviceIndex]);
+                    } else {
                       done();
                     }
                   }
@@ -36,9 +37,11 @@ module.exports = {
               });
 
             } else {
-              nbServiceDone++;
+              serviceIndex++;
 
-              if(nbServiceDone == services.length) {
+              if(serviceIndex < services.length) {
+                makeJobForService(services[serviceIndex]);
+              } else {
                 done();
               }
             }
@@ -72,7 +75,7 @@ module.exports = {
           });
         };
 
-        services.forEach(function(service) {
+        var makeJobForService = function(service) {
           if(providers.indexOf(service.provider) == -1) {
             providers.push(service.provider);
 
@@ -98,8 +101,9 @@ module.exports = {
               }
             });
           }
-        });
+        };
 
+        makeJobForService(services[serviceIndex]);
 
       } else {
         done();
