@@ -36,10 +36,6 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.INTEGER,
       allowNull: true,
     },
-    ServiceId: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-    },
     ProviderId: {
       type: DataTypes.INTEGER,
       allowNull: true,

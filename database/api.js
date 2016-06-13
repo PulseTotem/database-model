@@ -89,7 +89,6 @@ exports.belongsTo = [
 
   ['SDIs', 'Teams'], // a SDI can be seen/administrated by only one Team
 
-  ['OAuthKeys', 'Services'], // an OAuthKey belongs to one Service
   ['OAuthKeys', 'Providers'], // an OAuthKey belongs to one Provider
 
   ['SDIs', 'ThemeSDIs'],
