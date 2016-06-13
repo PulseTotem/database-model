@@ -13,10 +13,12 @@ module.exports = {
       },
       ParamTypeId: {
         type: DataTypes.INTEGER,
+        primaryKey: true,
         allowNull: false
       },
       SourceId: {
         type: DataTypes.INTEGER,
+        primaryKey: true,
         allowNull: false
       }
     }).then(function(results) {

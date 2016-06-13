@@ -13,10 +13,12 @@ module.exports = {
       },
       ZoneContentId: {
         type: DataTypes.INTEGER,
+        primaryKey: true,
         allowNull: false
       },
       ProfilId: {
         type: DataTypes.INTEGER,
+        primaryKey: true,
         allowNull: false
       }
     }).then(function(results) {
