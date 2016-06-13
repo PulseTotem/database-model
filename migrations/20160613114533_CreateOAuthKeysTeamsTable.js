@@ -1,6 +1,6 @@
 module.exports = {
   up: function(migration, DataTypes, done) {
-    migration.createTable('TeamsOAuthKeys', {
+    migration.createTable('OAuthKeysTeams', {
       createdAt: {
         type: DataTypes.DATE,
         defaultValue: DataTypes.fn('NOW'),
@@ -11,12 +11,12 @@ module.exports = {
         defaultValue: DataTypes.fn('NOW'),
         allowNull: false
       },
-      TeamId: {
+      OAuthKeyId: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         allowNull: false
       },
-      OAuthKeyId: {
+      TeamId: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         allowNull: false
@@ -27,6 +27,6 @@ module.exports = {
   },
 
   down: function(migration, DataTypes) {
-    migration.dropTable('TeamsOAuthKeys');
+    migration.dropTable('OAuthKeysTeams');
   }
 }

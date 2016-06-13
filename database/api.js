@@ -1,7 +1,6 @@
 exports.models = [
   'AbsoluteEvents',
   'AbsoluteTimelines',
-  'AuthorizedClients',
   'Behaviours',
   'Calls',
   'CallTypes',
@@ -44,7 +43,6 @@ exports.hasMany = [
 
   ['SDIs', 'Zones'], // a SDI contains many zone
   ['SDIs', 'Profils'], // a SDI can have many profiles
-  ['SDIs', 'AuthorizedClients'],
 
   ['Zones', 'CallTypes'], // a Zone has many CallTypes and must be able to reach them for administration
   ['Zones', 'ZoneContents'],
@@ -67,7 +65,6 @@ exports.hasMany = [
   ['Calls', 'ParamValues'], // a Call has many ParamValues
 
   ['Profils', 'ZoneContents'], // a Profil has many ZoneContents
-  ['Profils', 'AuthorizedClients'],
 
   ['RelativeTimelines', 'RelativeEvents'],
 
@@ -94,9 +91,6 @@ exports.belongsTo = [
   ['SDIs', 'ThemeSDIs'],
 
   ['ThemeSDIs', 'ThemeZones'],
-
-  ['AuthorizedClients', 'SDIs'],
-  ['AuthorizedClients', 'Profils'],
 
   ['Zones', 'SDIs'], // a Zone can only belong to one SDI
   ['Zones', 'Behaviours'], // a Zone has one Behaviour
