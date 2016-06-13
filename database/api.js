@@ -38,6 +38,9 @@ exports.hasMany = [
 
   ['Users', 'OAuthKeys'], // a user has access to different OAuthKeys
 
+  ['Teams', 'OAuthKeys'], // a Team has access to different OAuthKeys
+  ['OAuthKeys', 'Teams'], // an OAuthKey belongs to many Teams
+
   ['SDIs', 'Zones'], // a SDI contains many zone
   ['SDIs', 'Profils'], // a SDI can have many profiles
   ['SDIs', 'AuthorizedClients'],
