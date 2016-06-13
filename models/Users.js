@@ -40,11 +40,11 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       defaultValue: 'now()'
     },
-    cmsAuthkey: {
+    cmsId: {
       type: DataTypes.STRING,
       allowNull: true,
     },
-    cmsId: {
+    cmsAuthkey: {
       type: DataTypes.STRING,
       allowNull: true,
     },
