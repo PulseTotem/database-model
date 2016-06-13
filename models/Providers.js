@@ -1,7 +1,7 @@
 /* jshint indent: 2 */
 
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('OAuthKeys', { 
+  return sequelize.define('Providers', { 
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true
@@ -11,10 +11,6 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true,
     },
     description: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    value: {
       type: DataTypes.STRING,
       allowNull: true,
     },
@@ -31,18 +27,6 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.DATE,
       allowNull: false,
       defaultValue: 'now()'
-    },
-    UserId: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-    },
-    ServiceId: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-    },
-    ProviderId: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
     }
   });
 };

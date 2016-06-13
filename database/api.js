@@ -12,6 +12,7 @@ exports.models = [
   'ParamValues',
   'Policies',
   'Profils',
+  'Providers',
   'RelativeEvents',
   'RelativeTimelines',
   'Renderers',
@@ -56,6 +57,8 @@ exports.hasMany = [
 
   ['Services', 'Sources'],
 
+  ['Providers', 'Sources'], // a Provider can be attached to multiple Sources
+
   ['InfoTypes', 'Sources'], // An InfoType has many Sources
   ['InfoTypes', 'Renderers'], // an InfoType has many Renderers
 
@@ -87,6 +90,7 @@ exports.belongsTo = [
   ['SDIs', 'Teams'], // a SDI can be seen/administrated by only one Team
 
   ['OAuthKeys', 'Services'], // an OAuthKey belongs to one Service
+  ['OAuthKeys', 'Providers'], // an OAuthKey belongs to one Provider
 
   ['SDIs', 'ThemeSDIs'],
 
@@ -106,7 +110,8 @@ exports.belongsTo = [
   ['CallTypes', 'Policies'], // a CallType has one ReceivePolicy
 
   ['Sources', 'InfoTypes'], // a Source has one InfoType
-  ['Sources', 'Services'],
+  ['Sources', 'Services'], // a Source belongs to a Service
+  ['Sources', 'Providers'], // a Source can be attached to one Provider
 
   ['Renderers', 'InfoTypes'], // A Renderer has one InfoType
   ['RendererThemes', 'Renderers'],
