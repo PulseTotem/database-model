@@ -61,6 +61,7 @@ exports.hasMany = [
   ['InfoTypes', 'Renderers'], // an InfoType has many Renderers
 
   ['ParamTypes', 'Sources'], // a ParamType is used by several Sources
+  ['ParamTypes', 'ParamValues'],
 
   ['Calls', 'ParamValues'], // a Call has many ParamValues
 
@@ -113,7 +114,7 @@ exports.belongsTo = [
 
   ['ParamTypes', 'TypeParamTypes', {as: 'Type', foreignKey: 'TypeParamTypeId'}], // A paramType has a TypeParamType
   ['ParamTypes', 'ConstraintParamTypes', {as: 'Constraint', foreignKey: 'ConstraintParamTypeId'}], // A paramType can have a constraint
-  ['ParamTypes', 'ParamValues', {as: 'DefaultValue', foreignKey: 'ParamValueId'}], // a ParamType can have a default value,
+  ['ParamTypes', {model: 'ParamValues', as: 'DefaultValues'}, {as: 'DefaultValue', foreignKey: 'ParamValueId'}], // a ParamType can have a default value,
 
   ['ParamValues', 'ParamTypes'], // a ParamValue has one ParamType
 
