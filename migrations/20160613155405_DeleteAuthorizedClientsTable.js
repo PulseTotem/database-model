@@ -1,21 +1,31 @@
 module.exports = {
   up: function(migration, DataTypes, done) {
-    migration.createTable('SDIs', {
+    migration.dropTable('AuthorizedClients').then(function(results) {
+      done();
+    });
+  },
+
+  down: function(migration, DataTypes, done) {
+    migration.createTable('AuthorizedClients', {
       id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true
       },
+      ip: {
+        type: DataTypes.STRING,
+        allowNull: true
+      },
       name: {
         type: DataTypes.STRING,
         allowNull: true
       },
-      description: {
-        type: DataTypes.STRING,
+      online: {
+        type: DataTypes.BOOLEAN,
         allowNull: true
       },
-      allowedHost: {
-        type: DataTypes.STRING,
+      lastOnline: {
+        type: DataTypes.DATE,
         allowNull: true
       },
       complete: {
@@ -32,16 +42,16 @@ module.exports = {
         defaultValue: DataTypes.fn('NOW'),
         allowNull: false
       },
-      ThemeSDIId: {
+      SDIId: {
+        type: DataTypes.INTEGER,
+        allowNull: true
+      },
+      ProfilId: {
         type: DataTypes.INTEGER,
         allowNull: true
       }
     }).then(function(results) {
       done();
     });
-  },
-
-  down: function(migration, DataTypes) {
-    migration.dropTable('SDIs');
   }
 }

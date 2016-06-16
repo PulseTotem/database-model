@@ -1,5 +1,5 @@
 module.exports = {
-  up: function(migration, DataTypes) {
+  up: function(migration, DataTypes, done) {
     migration.createTable('InfoTypes', {
       id: {
         type: DataTypes.INTEGER,
@@ -25,6 +25,8 @@ module.exports = {
         defaultValue: DataTypes.fn('NOW'),
         allowNull: false
       }
+    }).then(function(results) {
+      done();
     });
   },
 

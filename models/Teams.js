@@ -1,25 +1,13 @@
 /* jshint indent: 2 */
 
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('AuthorizedClients', { 
+  return sequelize.define('Teams', { 
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true
     },
-    ip: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
     name: {
       type: DataTypes.STRING,
-      allowNull: true,
-    },
-    online: {
-      type: DataTypes.BOOLEAN,
-      allowNull: true,
-    },
-    lastOnline: {
-      type: DataTypes.DATE,
       allowNull: true,
     },
     complete: {
@@ -36,11 +24,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       defaultValue: 'now()'
     },
-    SDIId: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-    },
-    ProfilId: {
+    OwnerId: {
       type: DataTypes.INTEGER,
       allowNull: true,
     }

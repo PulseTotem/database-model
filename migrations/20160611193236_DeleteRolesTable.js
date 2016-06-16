@@ -1,6 +1,12 @@
 module.exports = {
   up: function(migration, DataTypes, done) {
-    migration.createTable('SDIs', {
+    migration.dropTable('Roles').then(function(results) {
+      done();
+    });
+  },
+
+  down: function(migration, DataTypes) {
+    migration.createTable('Roles', {
       id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -8,14 +14,7 @@ module.exports = {
       },
       name: {
         type: DataTypes.STRING,
-        allowNull: true
-      },
-      description: {
-        type: DataTypes.STRING,
-        allowNull: true
-      },
-      allowedHost: {
-        type: DataTypes.STRING,
+        unique: true,
         allowNull: true
       },
       complete: {
@@ -32,16 +31,10 @@ module.exports = {
         defaultValue: DataTypes.fn('NOW'),
         allowNull: false
       },
-      ThemeSDIId: {
+      UserId: {
         type: DataTypes.INTEGER,
         allowNull: true
       }
-    }).then(function(results) {
-      done();
     });
-  },
-
-  down: function(migration, DataTypes) {
-    migration.dropTable('SDIs');
   }
 }

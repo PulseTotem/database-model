@@ -39,6 +39,10 @@ module.exports = function(sequelize, DataTypes) {
     CloneOrigineId: {
       type: DataTypes.INTEGER,
       allowNull: true,
+    },
+    TeamId: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
     }
   });
 };

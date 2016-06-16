@@ -1,16 +1,16 @@
 /* jshint indent: 2 */
 
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('Clients', { 
+  return sequelize.define('Providers', { 
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true
     },
-    ip: {
+    name: {
       type: DataTypes.STRING,
       allowNull: true,
     },
-    socketId: {
+    description: {
       type: DataTypes.STRING,
       allowNull: true,
     },
@@ -27,10 +27,6 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.DATE,
       allowNull: false,
       defaultValue: 'now()'
-    },
-    ProfilId: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
     }
   });
 };
