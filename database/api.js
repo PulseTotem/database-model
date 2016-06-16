@@ -84,6 +84,7 @@ exports.hasMany = [
 exports.belongsTo = [
   ['Teams', {model : 'Users', as: 'Owners'}, {as: 'Owner', foreignKey: 'OwnerId'}],
   ['Users', {model: 'Teams', as: 'DefaultTeams'}, {as: 'DefaultTeam', foreignKey: 'DefaultTeamId'}],
+  ['Tokens', 'Users'],
 
   ['SDIs', 'Teams'], // a SDI can be seen/administrated by only one Team
 
