@@ -1,7 +1,7 @@
 {
-  "name": "the6thscreen-database",
-  "version": "3.0.0",
-  "description": "the6thscreen-database",
+  "name": "pulsetotem-database",
+  "version": "3.1.0",
+  "description": "pulsetotem-database",
   "dependencies": {
     "pg": "<=3.4.1",
     "pg-hstore": "<=2.3.2",
