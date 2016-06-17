@@ -11,6 +11,11 @@ module.exports = {
         unique: true,
         allowNull: false
       },
+      endDate: {
+        type: DataTypes.DATE,
+        defaultValue: DataTypes.fn('NOW'),
+        allowNull: false
+      },
       complete: {
         type: DataTypes.BOOLEAN,
         allowNull: true

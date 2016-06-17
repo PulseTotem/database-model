@@ -2,16 +2,24 @@ module.exports = {
   up: function(migration, DataTypes, done) {
     migration.removeColumn(
         'Users',
-        'Token'
+        'token'
     ).then(function(results) {
-      done();
+        migration.addColumn(
+        'Users',
+        'lastConnection',
+        {
+            type: DataTypes.DATE,
+            allowNull: true
+        }).then(function (results) {
+            done();
+        });
     });
   },
 
   down: function(migration, DataTypes) {
     migration.addColumn(
         'Users',
-        'Token',
+        'token',
         {
           type: DataTypes.STRING,
           allowNull: true
