@@ -28,7 +28,8 @@ exports.models = [
   'Users',
   'UserTriggers',
   'ZoneContents',
-  'Zones'
+  'Zones',
+  'Tokens'
 ];
 
 exports.hasMany = [
