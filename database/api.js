@@ -37,6 +37,7 @@ exports.hasMany = [
   ['Teams', 'SDIs'], // a Team has access to different SDI's
 
   ['Users', 'OAuthKeys'], // a user has access to different OAuthKeys
+  ['Users', 'Tokens'],
 
   ['Teams', 'OAuthKeys'], // a Team has access to different OAuthKeys
   ['OAuthKeys', 'Teams'], // an OAuthKey belongs to many Teams
