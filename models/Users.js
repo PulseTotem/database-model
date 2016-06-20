@@ -18,10 +18,6 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING,
       allowNull: true,
     },
-    token: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
     lastIp: {
       type: DataTypes.STRING,
       allowNull: true,
@@ -50,6 +46,15 @@ module.exports = function(sequelize, DataTypes) {
     },
     DefaultTeamId: {
       type: DataTypes.INTEGER,
+      allowNull: true,
+    },
+    isAdmin: {
+      type: DataTypes.BOOLEAN,
+      allowNull: true,
+      defaultValue: false
+    },
+    lastConnection: {
+      type: DataTypes.DATE,
       allowNull: true,
     }
   });

@@ -28,7 +28,8 @@ exports.models = [
   'Users',
   'UserTriggers',
   'ZoneContents',
-  'Zones'
+  'Zones',
+  'Tokens'
 ];
 
 exports.hasMany = [
@@ -37,6 +38,7 @@ exports.hasMany = [
   ['Teams', 'SDIs'], // a Team has access to different SDI's
 
   ['Users', 'OAuthKeys'], // a user has access to different OAuthKeys
+  ['Users', 'Tokens'],
 
   ['Teams', 'OAuthKeys'], // a Team has access to different OAuthKeys
   ['OAuthKeys', 'Teams'], // an OAuthKey belongs to many Teams
@@ -84,6 +86,7 @@ exports.hasMany = [
 exports.belongsTo = [
   ['Teams', {model : 'Users', as: 'Owners'}, {as: 'Owner', foreignKey: 'OwnerId'}],
   ['Users', {model: 'Teams', as: 'DefaultTeams'}, {as: 'DefaultTeam', foreignKey: 'DefaultTeamId'}],
+  ['Tokens', 'Users'],
 
   ['SDIs', 'Teams'], // a SDI can be seen/administrated by only one Team
 
