@@ -1,18 +1,19 @@
 /* jshint indent: 2 */
 
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('Clients', { 
+  return sequelize.define('Tokens', { 
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true
     },
-    ip: {
+    value: {
       type: DataTypes.STRING,
-      allowNull: true,
+      allowNull: false,
     },
-    socketId: {
-      type: DataTypes.STRING,
-      allowNull: true,
+    endDate: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      defaultValue: 'now()'
     },
     complete: {
       type: DataTypes.BOOLEAN,
@@ -28,7 +29,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       defaultValue: 'now()'
     },
-    ProfilId: {
+    UserId: {
       type: DataTypes.INTEGER,
       allowNull: true,
     }

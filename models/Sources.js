@@ -47,6 +47,10 @@ module.exports = function(sequelize, DataTypes) {
     ServiceId: {
       type: DataTypes.INTEGER,
       allowNull: true,
+    },
+    ProviderId: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
     }
   });
 };

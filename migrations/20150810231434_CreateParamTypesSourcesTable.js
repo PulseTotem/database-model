@@ -1,5 +1,5 @@
 module.exports = {
-  up: function(migration, DataTypes) {
+  up: function(migration, DataTypes, done) {
     migration.createTable('ParamTypesSources', {
       createdAt: {
         type: DataTypes.DATE,
@@ -13,12 +13,16 @@ module.exports = {
       },
       ParamTypeId: {
         type: DataTypes.INTEGER,
+        primaryKey: true,
         allowNull: false
       },
       SourceId: {
         type: DataTypes.INTEGER,
+        primaryKey: true,
         allowNull: false
       }
+    }).then(function(results) {
+      done();
     });
   },
 

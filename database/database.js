@@ -164,8 +164,17 @@ exports.start = function() {
     var originName = originTarget[0];
     var origin = db[originName];
 
-    var targetName = originTarget[1];
-    var target = db[targetName];
+    var targetName = "";
+    var target = null;
+
+    if(typeof(originTarget[1]) == "string") {
+      targetName = originTarget[1];
+      target = db[targetName];
+    } else {
+      var modelName = originTarget[1].model;
+      targetName = originTarget[1].as;
+      target = db[modelName];
+    }
 
     var options = {constraints: false};
     if(originTarget.length > 2) {

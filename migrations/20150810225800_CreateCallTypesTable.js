@@ -1,5 +1,5 @@
 module.exports = {
-  up: function(migration, DataTypes) {
+  up: function(migration, DataTypes, done) {
     migration.createTable('CallTypes', {
       id: {
         type: DataTypes.INTEGER,
@@ -44,6 +44,8 @@ module.exports = {
         type: DataTypes.INTEGER,
         allowNull: true
       }
+    }).then(function(results) {
+      done();
     });
   },
 

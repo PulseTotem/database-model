@@ -1,5 +1,5 @@
 module.exports = {
-  up: function(migration, DataTypes) {
+  up: function(migration, DataTypes, done) {
     migration.createTable('ThemeSDIs', {
       id: {
         type: DataTypes.INTEGER,
@@ -60,6 +60,8 @@ module.exports = {
         type: DataTypes.INTEGER,
         allowNull: true
       }
+    }).then(function(results) {
+      done();
     });
   },
 

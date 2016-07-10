@@ -7,6 +7,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-exec');
   grunt.loadNpmTasks('grunt-contrib-clean');
+  grunt.loadNpmTasks('grunt-bumpup');
  /* grunt.loadNpmTasks('grunt-update-json');
   grunt.loadNpmTasks('grunt-npm-install');
   grunt.loadNpmTasks('grunt-express-server');
@@ -40,7 +41,9 @@ module.exports = function (grunt) {
 
     clean: {
       models: ["models/*.js", "!models/index.js"]
-    }
+    },
+
+    bumpup: 'package.json'
 
 /*    coreReposConfig : grunt.file.readJSON('core-repos-config.json'),
 
@@ -322,10 +325,26 @@ module.exports = function (grunt) {
           grunt.task.run(['copy:migrationFile']);
           break;
         case 'do' :
-          grunt.task.run(['exec:doMigration', 'clean:models', 'exec:generateModels']);
+          var generateModels = "false";
+          if(typeof(arg2) != "undefined" && arg2 != null) {
+            generateModels = arg2;
+          }
+          if(generateModels == "true") {
+            grunt.task.run(['exec:doMigration', 'clean:models', 'exec:generateModels']);
+          } else {
+            grunt.task.run(['exec:doMigration']);
+          }
           break;
         case 'undo' :
-          grunt.task.run(['exec:undoMigration', 'clean:models', 'exec:generateModels']);
+          var generateModels = "false";
+          if(typeof(arg2) != "undefined" && arg2 != null) {
+            generateModels = arg2;
+          }
+          if(generateModels == "true") {
+            grunt.task.run(['exec:undoMigration', 'clean:models', 'exec:generateModels']);
+          } else {
+            grunt.task.run(['exec:undoMigration']);
+          }
           break;
         default :
           grunt.log.writeln('Action "' + arg + '" doesn\'t exist.');
