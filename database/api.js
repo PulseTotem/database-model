@@ -83,6 +83,10 @@ exports.hasMany = [
   //['CMSRepositories', 'CMSFiles']
 ];
 
+exports.hasOne = [
+  ['Calls','RelativeEvents']
+];
+
 exports.belongsTo = [
   ['Teams', {model : 'Users', as: 'Owners'}, {as: 'Owner', foreignKey: 'OwnerId'}],
   ['Users', {model: 'Teams', as: 'DefaultTeams'}, {as: 'DefaultTeam', foreignKey: 'DefaultTeamId'}],
