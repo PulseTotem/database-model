@@ -426,7 +426,8 @@ exports.start = function() {
     var model = db[modelName];
     epilogue.resource({
       model: model,
-      endpoints: ['/' + modelName, '/' + modelName + '/:id']
+      endpoints: ['/' + modelName, '/' + modelName + '/:id'],
+      pagination: false
     });
   });
 
