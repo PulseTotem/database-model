@@ -84,7 +84,13 @@ exports.hasMany = [
 ];
 
 exports.hasOne = [
-  ['Calls','RelativeEvents']
+  ['Calls','RelativeEvents'],
+  ['RelativeTimelines', 'ZoneContents'],
+  ['RelativeEvents','RelativeTimelines'],
+  ['ParamValues', 'Calls'],
+  ['AbsoluteEvents','AbsoluteTimelines'],
+  ['AbsoluteTimelines', 'ZoneContents'],
+  ['OAuthKeys', 'Users'],
 ];
 
 exports.belongsTo = [
@@ -134,6 +140,7 @@ exports.belongsTo = [
   ['RelativeTimelines', 'TimelineRunners'],
   ['RelativeTimelines', 'UserTriggers'],
   ['RelativeTimelines', 'SystemTriggers'],
+
 
   ['RelativeEvents', 'Calls'], // A relative event has one call
 
