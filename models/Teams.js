@@ -27,6 +27,10 @@ module.exports = function(sequelize, DataTypes) {
     OwnerId: {
       type: DataTypes.INTEGER,
       allowNull: true,
+    },
+    cmsId: {
+      type: DataTypes.STRING,
+      allowNull: true,
     }
   });
 };
