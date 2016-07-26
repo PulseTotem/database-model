@@ -86,11 +86,7 @@ exports.hasMany = [
 exports.hasOne = [
   ['Calls','RelativeEvents'],
   ['RelativeTimelines', 'ZoneContents'],
-  ['RelativeEvents','RelativeTimelines'],
-  ['ParamValues', 'Calls'],
-  ['AbsoluteEvents','AbsoluteTimelines'],
-  ['AbsoluteTimelines', 'ZoneContents'],
-  ['OAuthKeys', 'Users'],
+  ['AbsoluteTimelines', 'ZoneContents']
 ];
 
 exports.belongsTo = [
@@ -101,6 +97,7 @@ exports.belongsTo = [
   ['SDIs', 'Teams'], // a SDI can be seen/administrated by only one Team
 
   ['OAuthKeys', 'Providers'], // an OAuthKey belongs to one Provider
+  ['OAuthKeys', 'Users'],
 
   ['SDIs', 'ThemeSDIs'],
 
@@ -130,6 +127,7 @@ exports.belongsTo = [
   ['ParamTypes', {model: 'ParamValues', as: 'DefaultValues'}, {as: 'DefaultValue', foreignKey: 'ParamValueId'}], // a ParamType can have a default value,
 
   ['ParamValues', 'ParamTypes'], // a ParamValue has one ParamType
+  ['ParamValues', 'Calls'],
 
   ['Calls', 'CallTypes'], // a Call has one specific CallType
   ['Calls', 'OAuthKeys'], // a Call can have one specific OAuthKey
@@ -143,8 +141,10 @@ exports.belongsTo = [
 
 
   ['RelativeEvents', 'Calls'], // A relative event has one call
+  ['RelativeEvents','RelativeTimelines'],
 
   ['AbsoluteEvents', 'RelativeTimelines'], // An absolute event has one relative timeline
+  ['AbsoluteEvents','AbsoluteTimelines'],
 
   ['ZoneContents', 'AbsoluteTimelines'],
   ['ZoneContents', 'RelativeTimelines'],
