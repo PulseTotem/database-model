@@ -160,6 +160,131 @@ exports.start = function() {
     });
   });
 
+  api.hasOne.forEach(function(originTarget) {
+
+
+    var originName = originTarget[0];
+    var origin = db[originName];
+
+    var targetName = originTarget[1];
+    var target = db[targetName];
+
+    var options = {constraints: false};
+    if(originTarget.length > 2) {
+      for (var attrname in originTarget[2]) {
+        options[attrname] = originTarget[2][attrname];
+      }
+    }
+
+    if(typeof(options.as) != "undefined" && (typeof(options.as.singular) == "undefined" || typeof(options.as.plural) == "undefined")) {
+      console.error("'hasOne' definition between '" + originName + "' and '" + targetName + "' : If you give 'as' option, you need to provide singular and plural values.");
+      process.exit(1);
+    }
+
+    origin.hasOne(target, options);
+
+    //For a HasOne relation : Endpoint to retrieve one target instance attached to origin instance
+    app.get('/' + originName + '/:originId/' + targetName, function(req, res) {
+      //console.log('hasMany - get : /' + originName + '/' + req.originId + '/' + targetName);
+
+      var methodAttributeName = target.options.name.singular;
+      if(typeof(options.as) != "undefined") {
+        methodAttributeName = options.as.singular;
+      }
+
+      origin.find(req.originId)
+          .then(function(originInstance) {
+            if(originInstance != null) {
+              console.log(JSON.stringify(originInstance));
+              originInstance['get' + methodAttributeName]().then(function(targetInstance) {
+                res.json(targetInstance.dataValues);
+              }).catch(function(error) {
+                res.status(500).send({'error': JSON.stringify(error)});
+              });
+            } else {
+              res.status(404).send({'error': originName + ' with given Id "' + req.originId + '" was not found.'});
+            }
+          })
+          .catch(function(error) {
+            res.status(500).send({'error': JSON.stringify(error)});
+          });
+    });
+
+    //For a HasOne relation : Endpoint to add a new target instance to origin instance
+    app.put('/' + originName + '/:originId/' + targetName + '/:targetId', function(req, res) {
+      //console.log('hasMany - put : /' + originName + '/' + req.originId + '/' + targetName + '/' + req.targetId);
+
+      var methodAttributeName = target.options.name.singular;
+      if(typeof(options.as) != "undefined") {
+        methodAttributeName = options.as.singular;
+      }
+
+      origin.find(req.originId)
+          .then(function(originInstance) {
+            if(originInstance != null) {
+              target.find(req.targetId)
+                  .then(function(targetInstance) {
+                    if(targetInstance != null) {
+                      originInstance['set' + methodAttributeName](targetInstance).then(function() {
+                        res.json({});
+                      }).catch(function(error) {
+                        res.status(500).send({'error': JSON.stringify(error)});
+                      });
+                    } else {
+                      res.status(404).send({'error': targetName + ' with given Id "' + req.targetId + '" was not found.'});
+                    }
+                  })
+                  .catch(function(error) {
+                    res.status(500).send({'error': JSON.stringify(error)});
+                  });
+            } else {
+              res.status(404).send({'error': originName + ' with given Id "' + req.originId + '" was not found.'});
+            }
+          })
+          .catch(function(error) {
+            res.status(500).send({'error': JSON.stringify(error)});
+          });
+
+
+    });
+
+    //For a HasOne relation : Endpoint to remove a target instance to origin instance
+    app.delete('/' + originName + '/:originId/' + targetName + '/:targetId', function(req, res) {
+      //console.log('hasMany - delete : /' + originName + '/' + req.originId + '/' + targetName + '/' + req.targetId);
+
+      var methodAttributeName = target.options.name.singular;
+      if(typeof(options.as) != "undefined") {
+        methodAttributeName = options.as.singular;
+      }
+
+      origin.find(req.originId)
+          .then(function(originInstance) {
+            if(originInstance != null) {
+              target.find(req.targetId)
+                  .then(function(targetInstance) {
+                    if(targetInstance != null) {
+                      originInstance['remove' + methodAttributeName](targetInstance).then(function() {
+                        res.json({});
+                      }).catch(function(error) {
+                        res.status(500).send({'error': JSON.stringify(error)});
+                      });
+                    } else {
+                      res.status(404).send({'error': targetName + ' with given Id "' + req.targetId + '" was not found.'});
+                    }
+                  })
+                  .catch(function(error) {
+                    res.status(500).send({'error': JSON.stringify(error)});
+                  });
+            } else {
+              res.status(404).send({'error': originName + ' with given Id "' + req.originId + '" was not found.'});
+            }
+          })
+          .catch(function(error) {
+            res.status(500).send({'error': JSON.stringify(error)});
+          });
+    });
+  });
+
   api.belongsTo.forEach(function(originTarget) {
     var originName = originTarget[0];
     var origin = db[originName];
@@ -301,7 +426,8 @@ exports.start = function() {
     var model = db[modelName];
     epilogue.resource({
       model: model,
-      endpoints: ['/' + modelName, '/' + modelName + '/:id']
+      endpoints: ['/' + modelName, '/' + modelName + '/:id'],
+      pagination: false
     });
   });
 

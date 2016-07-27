@@ -7,6 +7,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-exec');
   grunt.loadNpmTasks('grunt-contrib-clean');
+  grunt.loadNpmTasks('grunt-bumpup');
  /* grunt.loadNpmTasks('grunt-update-json');
   grunt.loadNpmTasks('grunt-npm-install');
   grunt.loadNpmTasks('grunt-express-server');
@@ -40,7 +41,9 @@ module.exports = function (grunt) {
 
     clean: {
       models: ["models/*.js", "!models/index.js"]
-    }
+    },
+
+    bumpup: 'package.json'
 
 /*    coreReposConfig : grunt.file.readJSON('core-repos-config.json'),
 
