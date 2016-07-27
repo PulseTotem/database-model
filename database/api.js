@@ -83,6 +83,12 @@ exports.hasMany = [
   //['CMSRepositories', 'CMSFiles']
 ];
 
+exports.hasOne = [
+  ['Calls','RelativeEvents'],
+  ['RelativeTimelines', 'ZoneContents'],
+  ['AbsoluteTimelines', 'ZoneContents']
+];
+
 exports.belongsTo = [
   ['Teams', {model : 'Users', as: 'Owners'}, {as: 'Owner', foreignKey: 'OwnerId'}],
   ['Users', {model: 'Teams', as: 'DefaultTeams'}, {as: 'DefaultTeam', foreignKey: 'DefaultTeamId'}],
@@ -91,6 +97,7 @@ exports.belongsTo = [
   ['SDIs', 'Teams'], // a SDI can be seen/administrated by only one Team
 
   ['OAuthKeys', 'Providers'], // an OAuthKey belongs to one Provider
+  ['OAuthKeys', 'Users'],
 
   ['SDIs', 'ThemeSDIs'],
 
@@ -120,6 +127,7 @@ exports.belongsTo = [
   ['ParamTypes', {model: 'ParamValues', as: 'DefaultValues'}, {as: 'DefaultValue', foreignKey: 'ParamValueId'}], // a ParamType can have a default value,
 
   ['ParamValues', 'ParamTypes'], // a ParamValue has one ParamType
+  ['ParamValues', 'Calls'],
 
   ['Calls', 'CallTypes'], // a Call has one specific CallType
   ['Calls', 'OAuthKeys'], // a Call can have one specific OAuthKey
@@ -131,9 +139,12 @@ exports.belongsTo = [
   ['RelativeTimelines', 'UserTriggers'],
   ['RelativeTimelines', 'SystemTriggers'],
 
+
   ['RelativeEvents', 'Calls'], // A relative event has one call
+  ['RelativeEvents','RelativeTimelines'],
 
   ['AbsoluteEvents', 'RelativeTimelines'], // An absolute event has one relative timeline
+  ['AbsoluteEvents','AbsoluteTimelines'],
 
   ['ZoneContents', 'AbsoluteTimelines'],
   ['ZoneContents', 'RelativeTimelines'],
